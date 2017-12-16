@@ -6,8 +6,18 @@
 @import url(https://fonts.googleapis.com/css?family=Karla);
 
 /* Rules for mobile Devices */
-@media only screen and (max-device-width: 750px)  {  
+@media only screen and (max-device-width: 490px)  {  
     
+    #left {
+               margin-left: 0%;
+    left: 0;
+    }
+    
+    #main {
+        margin-left: 15%;
+    }
+    
+
 }
 
 * {
@@ -15,6 +25,8 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+        
 
 body {
     margin: 0;
@@ -67,7 +79,6 @@ a {
     top: 0;
     background-color: white;
     margin-left: 30%;
-    height: 500px;
     font-size: 90%;
 }
 
@@ -129,3 +140,4 @@ a {
 }
 
 
+}
