@@ -82,7 +82,7 @@
                 </div>
             </a>
             -->   
-            
+        </div>
             <script>
             
             function displayPost(postNum) {
@@ -97,7 +97,14 @@
 
                 var childData = childSnapshot.val();
                         if(childData['index'] == postNum ) {
-                            post_string += '<div class="article"><h2>' + childData['title'] + '</h2>' +
+                            if(postNum % 2 == 0)
+                            post_string += '<div class="post">';
+                            else{
+                                post_string += '<div class="post2">';
+                            }
+                            post_string += '<div class="postContentFull">' +
+                            '<h2><a href="index.html">< Return to home</h2>' +
+                            '<h1>' + childData['title'] + '</h1>' +
                         '<h3>' + childData['date'] + '</h3>' +
                                  '<h5><strong>Tags </strong>';
                 for(var i = 0; i < childData['tags'].length; i++) {
@@ -105,7 +112,7 @@
                
                    
                 }
-                             post_string += '</h5>' + childData['text'] + '<br /><br /></article>';
+                             post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
                             
                         }
                   
@@ -116,6 +123,6 @@
    
             }
             </script>
-        </div>        
+              
     </body>
 </html>

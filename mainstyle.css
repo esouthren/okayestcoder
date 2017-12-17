@@ -147,6 +147,15 @@ mark {
     clear: both;
 }
 
+.postContentFull {
+        width: 100%;
+    margin-right: 1.75em;
+    padding: 0em 0em 1em 1.5em;
+    background-color: white; 
+    margin-left: 0.75em; 
+    overflow: hidden;
+    clear: both;
+}
 
 .postContent img {
     max-height: 1px;
@@ -173,11 +182,11 @@ mark {
 
 .article {
     width = 100%;
-    position: relative;
+
     
     background-color: white;
     padding: 1em;
-    
+    padding-left: 1em;
     font-size: 110%;
 }
 
@@ -269,6 +278,15 @@ mark {
     overflow: hidden;
 }
 
+    .postContentFull {
+    width: 100%;
+   
+   
+   
+    background-color: white; 
+
+    overflow: hidden;
+}
 
 .postContent img {
     max-width: 20%;
