@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+                  <script src="htmlImporter.js"></script>
+        <title>Okay-ish Coding</title>
+        <link rel="stylesheet" type="text/css" href="mainstyle.css">
+        <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+        
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
+            authDomain: "okayestcoder.firebaseapp.com",
+            databaseURL: "https://okayestcoder.firebaseio.com",
+            projectId: "okayestcoder",
+            storageBucket: "okayestcoder.appspot.com",
+            messagingSenderId: "935764653668"
+          };
+          firebase.initializeApp(config);
+            
+        var database = firebase.database();
+            
+        var leadsRef = database.ref('test');
+            leadsRef.on('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            console.log(childData);
+            });
+                
+        });
+            console.log("hello world!");
+            
+        </script>
+    </head>
+    <body>
+        <script>HTMLImporter.import("menu.html");</script>
+        
+    
+
+    
+    <div class="article">
+        <h1>Add A Post</h1>
+            <table class="addPostTable">
+                <tr>
+                    <td>Title</td><td><input type="textbox" id="postTitle" chars="100" /></td>
+                </tr>
+                <tr>
+                    <td>Publish Date</td><td><input type="textbox" id="postDate" chars="100"  /></td>
+                </tr>
+                <tr>
+                    <td>Text</td><td><input type="textbox" chars="100" id="postText" /></td>
+                </tr>
+                <tr>
+                    <td>Tags</td><td><input type="textbox" chars="100" id="postTags"  /></td>
+                </tr>
+                <tr>
+                    <td>Username</td><td><input type="textbox" chars="100" id="username" /></td>
+                </tr>
+                <tr>
+                    <td>Password</td><td><input type="textbox" chars="100" id="password"  /></td>
+                </tr>
+
+
+
+            </table>
+            <br /><br />
+           <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />
+        
+        <br />
+        
+
+    </div>
+
+        <script>
+            
+        function signOut() {
+            firebase.auth().signOut().then(function() {
+              console.log('Signed Out');
+            }, function(error) {
+              console.error('Sign Out Error', error);
+            });
+        }
+            
+        function logIn(username, password) {
+            firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
+                  // Handle Errors here.            
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  console.log("Invalid Authentication");
+                });
+        }
+        
+        function submitPost() {
+            
+            var postTitle = document.getElementById('postTitle').value;
+            var postDate = document.getElementById('postDate').value;
+            var postText = document.getElementById('postText').value;
+            var postTags = document.getElementById('postTags').value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            
+            if( (postTitle === "") ||
+                (postDate === "") ||
+                (postText === "") ||
+                (postTags === "") ||
+                (username === "") ||
+                (password === "") )
+                {
+                console.log("Need data!");
+            }
+            else {
+                postTags = postTags.toLowerCase();
+                postTags = postTags.split(' ');
+                console.log(postTags);
+
+            
+                /* Log in */
+                logIn(username, password);
+                
+                /* Check if user is logged in */
+                firebase.auth().onAuthStateChanged(function(user) {
+                    if (user) {
+                        console.log("User is signed in!");
+                        // Increment 'PostCount' by 1
+                        firebase.database().ref('/count/postCount').once('value').then(function(snapshot) {
+                            var count = (snapshot.val());
+                            count +=1;            
+                            firebase.database().ref('count').set({
+                                postCount: count
+                                 });
+                            // Write Post Data
+                            firebase.database().ref('posts/post' + count).set({
+                                title: postTitle,
+                                date: postDate,
+                                text : postText,
+                                tags : postTags,
+                                // Negative index to maintain order when displaying posts page
+                                index: (count*-1)
+                            }); 
+                        });    
+                      } else {
+                        console.log("Not signed in!");
+                      }
+                });
+            }
+            // Sign out admin
+            signOut();
+        }
+        
+
+        
+        </script>
+
+</body>
+</html>

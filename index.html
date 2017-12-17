@@ -2,44 +2,69 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
-            <script src="htmlImporter.js"></script>
+        
+        <!-- firebase initialisation -->
+        
+        <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
+            authDomain: "okayestcoder.firebaseapp.com",
+            databaseURL: "https://okayestcoder.firebaseio.com",
+            projectId: "okayestcoder",
+            storageBucket: "okayestcoder.appspot.com",
+            messagingSenderId: "935764653668"
+          };
+          firebase.initializeApp(config);
+            
+        var database = firebase.database();
+            
+        var dataDump = database.ref('posts').orderByChild('index');
+            dataDump = dataDump
+            var string_of_posts = "";
+            dataDump.on('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            // console.log(childData['tags']);
+                
+                // Generate the HTML for #main
+             string_of_posts += '<a href="post.html">';
+                if(parseInt(childData['index']) % 2 == 0) { 
+                string_of_posts += '<div class="post">';
+                } else {
+                   string_of_posts += '<div class="post2">';
+                }
+                 string_of_posts += '<div class="postContent"><img src="testimg.jpg" align="right" alt="test!" />' +
+                        '<h2>' + childData['title'] + '</h2>' +
+                        '<h3>' + childData['date'] + '</h3>' ;
+                string_of_posts += childData['text'].slice(0,250) + '....<strong> Continue</strong><br />' +
+                    '<h5><strong>Tags </strong>';
+                for(var i = 0; i < childData['tags'].length; i++) {
+                    string_of_posts += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
+                }
+                string_of_posts += '</h5></div></div></a>';
+            });
+            // Map HTML to #main div content    
+            $('#main').html(string_of_posts);   
+        });
+            
+            
+        </script>
+        <script src="htmlImporter.js"></script>
         <title>Okay-ish Coding</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
         
     </head>
+    
     <body>
+        
      <script>HTMLImporter.import("menu.html");</script>
 
-        <div id = "main">
-            <a href="post.html">
-                <div class="post">
-
-                    <div class="postContent">
-                        <img src="testimg.jpg" align="right" alt="test!" />
-                        
-                            <h2>This is a Story, All About How...</h2>
-                            
-                               
-                     
-                        This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some 
-                        <h5>
-                        <strong>Tags </strong><mark>&nbsp;css&nbsp;</mark>&nbsp;&nbsp;
-                        <mark> html </mark>&nbsp;&nbsp;
-                        <mark> javascript </mark>&nbsp;&nbsp;
-                        <mark> angular </mark>&nbsp;&nbsp;
-                        <mark> interviewing </mark>&nbsp;&nbsp;
-                        </h5>
-                        <table class="postFooter"><tr>
-                            <td> 
-                                <h4><i>18th December 2017</i></h4></td>
-                            
-                            <td class="postFooterRightCell">Comments</td>
-                         
-                            </tr></table>
-                    </div>      
-                </div>
-            </a>
+        <div id="main">
+            <!-- Sample Data to pad -->
+            <!--
             <a href="post.html">
                 <div class="post2">
 
@@ -53,84 +78,7 @@
                     </div>      
                 </div>
             </a>
-            <a href="post.html">
-                <div class="post">
-
-                    <div class="postContent">
-                        <img src="testimg.jpg" align="right" alt="test!" />
-
-                       <h2>This is a post!</h2>
-                        This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some stuff <br /><br />More Staff<br /><br />Even<br /><br />More stuff
-
-                    </div>      
-                </div>
-            </a>
-            <a href="post.html">
-                <div class="post2">
-
-                    <div class="postContent">
-                        <img src="testimg.jpg" align="right" alt="test!" />
-
-                       <h2>This is a post!</h2>
-                        This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some stuff <br /><br />More Staff<br /><br />Even<br /><br />More stuff
-
-                    </div>      
-                </div>
-            </a>
-                    <a href="post.html">
-                <div class="post">
-
-                    <div class="postContent">
-                        <img src="testimg.jpg" align="right" alt="test!" />
-
-                       <h2>This is a post!</h2>
-                        This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some stuff <br /><br />
-
-                    </div>      
-                </div>
-            </a>
-            <a href="post.html">
-                <div class="post2">
-
-                    <div class="postContent">
-                        <img src="testimg.jpg" align="right" alt="test!" />
-
-                       <h2>This is a post!</h2>
-                        This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some stuff <br /><br />More Staff<br /><br />Even<br /><br />More stuff
-
-                    </div>      
-                </div>
-            </a>
-            <a href="post.html">
-                <div class="post">
-
-                    <div class="postContent">
-                        <img src="testimg.jpg" align="right" alt="test!" />
-
-                       <h2>This is a post!</h2>
-                        This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some stuff <br /><br />More Staff<br /><br />Even<br /><br />More stuff
-
-                    </div>      
-                </div>
-            </a>
-            <a href="post.html">
-                <div class="post2">
-
-                    <div class="postContent">
-                        <img src="testimg.jpg" align="right" alt="test!" />
-
-                       <h2>This is a post!</h2>
-                        This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some stuff <br /><br />More Staff<br /><br />Even<br /><br />More stuff
-
-                    </div>      
-                </div>
-            </a>          
-        </div>
+            -->      
+        </div>        
     </body>
 </html>

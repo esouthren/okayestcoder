@@ -47,13 +47,24 @@ a {
     visibility: hidden;
 }
 
+#left a {
+    color: white;
+}
+
 #mobileMenu {
     width: 100%;
     height: 110px;
     background-color: #2987DD;
     visibility: visible;
     color: white;
+    
 }
+
+#mobileMenu a {
+    color: white;
+}
+
+
 
 .mobileMenuTable {
 
@@ -94,7 +105,7 @@ a {
 .post {
 
     background-color: cadetblue;
-    margin: 0.5em 0em 2em 0em;
+    margin: 0.5em 0em 1em 1em;
     position: relative; 
 }
 
@@ -116,14 +127,15 @@ mark {
     width = 80%;
     
     background-color: paleturquoise;
-    margin: 0.5em 0em 2em 0em;
-    position: relative;    
+    margin: 0.5em 0em 1em 1em;
+    position: relative;
+
     
 }
 
 .postContent {
     width: 100%;
-    left: 100px;
+    margin-right: 1.75em;
     padding: 0em 0em 1em 1.5em;
     background-color: white; 
     margin-left: 0.75em; 
@@ -145,7 +157,7 @@ mark {
 }
 
 .postFooter {
-    width: 100%; 
+    width: 90%; 
 }
 
 
@@ -156,20 +168,33 @@ mark {
 }
 
 .article {
-        width = 80%;
+    width = 90%;
     
     background-color: white;
-    margin: 0.5em 1em 0.5em 1em;
-    position: relative;
+    padding: 1em;
+    
     font-size: 110%;
 }
+
+    
+.addPostTable {
+    line-height: 2;
+    width: 100%;
+}
+
+.addPostTable td {
+    width: 50%;
+}
+
+
+    
 
 /* tablets */
 
 @media (min-width: 700px)  {   
     
 #main {
-   width: 55%;
+   width: 70%;
     top: 0;
     margin-left: 25%;
     font-size: 90%;
@@ -186,11 +211,11 @@ mark {
     font-size: 120%;
     padding: 0em 1em 0em 1em;
     visibility: visible;
-            left: 0px;
-        width: 25%;
+    left: 0px;
+    width: 25%;
 }
     
-    #mobileMenu {
+#mobileMenu {
 
     visibility: hidden;
 }
@@ -214,11 +239,9 @@ mark {
 
 .post {
     width = 80%;
-    margin: 0.5em 1em 2em 1em;
     position: relative;    
     
-}
-    
+}   
     
 
 .postContent:hover {
@@ -227,7 +250,6 @@ mark {
 
 .post2 {
     width = 80%;
-    margin: 0.5em 1em 2em 1em;
     position: relative;    
     
 }
@@ -258,15 +280,14 @@ mark {
     float: left;
 }
 
+    .article {
+        width: 75%;
+        margin-left: 25%;
+        top: 0;
+        position: absolute; 
+        border-right: 1px solid slategrey;
+    }
 
-.article {
-    width = 80%;
-    
-    background-color: white;
-    margin: 0.5em 1em 0.5em 1em;
-    position: relative;
-    font-size: 110%;
-}
 
 }
 
@@ -283,6 +304,12 @@ mark {
     
     #main {
         margin-left: 30%;
+         width: 55%;  
 
+    }
+    
+    .article {
+        width: 55%;
+        margin-left: 30%;
     }
 }
