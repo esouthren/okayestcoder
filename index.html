@@ -19,22 +19,24 @@
           };
           firebase.initializeApp(config);
             
-        var database = firebase.database();
-            
-        var dataDump = database.ref('posts').orderByChild('index');
-            dataDump = dataDump
+            var database = firebase.database();
+
+            var dataDump = database.ref('posts').orderByChild('index');
+     
             var string_of_posts = "";
             dataDump.on('value', function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-            var childData = childSnapshot.val();
-            // console.log(childData['tags']);
+                snapshot.forEach(function(childSnapshot) {
                 
-                // Generate the HTML for #main
-             string_of_posts += '<a href="post.html">';
+                var childData = childSnapshot.val();
+                // console.log(childData['tags']);
+
+                    // Generate the HTML for #main
+            
+                var postNum = (childData['index']);
                 if(parseInt(childData['index']) % 2 == 0) { 
-                string_of_posts += '<div class="post">';
+                string_of_posts += '<div class="post" onclick="displayPost(' + postNum + ')">';
                 } else {
-                   string_of_posts += '<div class="post2">';
+                   string_of_posts += '<div class="post2" onclick="displayPost(' + postNum + ')">';
                 }
                  string_of_posts += '<div class="postContent"><img src="testimg.jpg" align="right" alt="test!" />' +
                         '<h2>' + childData['title'] + '</h2>' +
@@ -44,10 +46,11 @@
                 for(var i = 0; i < childData['tags'].length; i++) {
                     string_of_posts += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
                 }
-                string_of_posts += '</h5></div></div></a>';
+                string_of_posts += '</h5></div></div>';
             });
-            // Map HTML to #main div content    
-            $('#main').html(string_of_posts);   
+            // Map HTML to #main div content
+            var list_of_posts = string_of_posts;
+            $('#main').html(list_of_posts);   
         });
             
             
@@ -78,7 +81,41 @@
                     </div>      
                 </div>
             </a>
-            -->      
+            -->   
+            
+            <script>
+            
+            function displayPost(postNum) {
+                
+         var database = firebase.database();
+                console.log(postNum);
+                post_string = "";
+            var dataDump = database.ref('posts').orderByChild('index');
+     
+            dataDump.on('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+
+                var childData = childSnapshot.val();
+                        if(childData['index'] == postNum ) {
+                            post_string += '<div class="article"><h2>' + childData['title'] + '</h2>' +
+                        '<h3>' + childData['date'] + '</h3>' +
+                                 '<h5><strong>Tags </strong>';
+                for(var i = 0; i < childData['tags'].length; i++) {
+                    post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
+               
+                   
+                }
+                             post_string += '</h5>' + childData['text'] + '<br /><br /></article>';
+                            
+                        }
+                  
+                    });
+                });
+                
+                $('#main').html(post_string);
+   
+            }
+            </script>
         </div>        
     </body>
 </html>
