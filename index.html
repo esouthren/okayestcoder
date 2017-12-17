@@ -2,41 +2,13 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
+            <script src="htmlImporter.js"></script>
         <title>Okay-ish Coding</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
+        
     </head>
     <body>
-        <!-- 2 Variations of menu, triggered by media queries -->
-        <div id="mobileMenu">
-            <table class="mobileMenuTable">
-            <tr>
-            <td class="mobileMenuHeader">
-            <h4><p class="headerBigTags">&lt; </p>The <br />Okay-est<br />Coder<strong><p class="headerBigTags"> &gt; </p></strong>
-                </h4>
-                </td>
-                <td>Other thing</td>
-                <td>About</td>
-                <td>Archive</td>
-            </tr></table>
-        </div>
-        
-        <div id = "left">
-            <center>
-                <h1><p class="headerBigTags">&lt; </p>The <br />Okay-est<br />Coder<strong><p class="headerBigTags"> &gt; </p></strong>
-                <br /><br />
-                </h1><hr />
-                <br />This is a little blurby thing. something all fuzzy and motivational.</center>
-                    
-                <br /><hr /><br />
-                About
-                <br /><br />
-                Archive
-                <br /><br />
-                Recent post list
-                <br /><br />
-                <br />           
-            
-        </div>
+     <script>HTMLImporter.import("menu.html");</script>
 
         <div id = "main">
             <a href="post.html">
@@ -44,11 +16,27 @@
 
                     <div class="postContent">
                         <img src="testimg.jpg" align="right" alt="test!" />
-
-                       <h2>This is a post!</h2>
+                        
+                            <h2>This is a Story, All About How...</h2>
+                            
+                               
+                     
                         This is a post contents!!I'm gonna waffle about some stuff 
-                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some stuff <br /><br />
-
+                        as if it's an article and woop dsdkh This is a post contents!!I'm gonna waffle about some 
+                        <h5>
+                        <strong>Tags </strong><mark>&nbsp;css&nbsp;</mark>&nbsp;&nbsp;
+                        <mark> html </mark>&nbsp;&nbsp;
+                        <mark> javascript </mark>&nbsp;&nbsp;
+                        <mark> angular </mark>&nbsp;&nbsp;
+                        <mark> interviewing </mark>&nbsp;&nbsp;
+                        </h5>
+                        <table class="postFooter"><tr>
+                            <td> 
+                                <h4><i>18th December 2017</i></h4></td>
+                            
+                            <td class="postFooterRightCell">Comments</td>
+                         
+                            </tr></table>
                     </div>      
                 </div>
             </a>

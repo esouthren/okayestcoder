@@ -2,41 +2,12 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
+                  <script src="htmlImporter.js"></script>
         <title>Okay-ish Coding</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
     </head>
     <body>
-        <!-- 2 Variations of menu, triggered by media queries -->
-        <div id="mobileMenu">
-            <table class="mobileMenuTable">
-            <tr>
-            <td class="mobileMenuHeader">
-            <h4><p class="headerBigTags">&lt; </p>The <br />Okay-ish<br />Coder<strong><p class="headerBigTags"> &gt; </p></strong>
-                </h4>
-                </td>
-                <td>Other thing</td>
-                <td>About</td>
-                <td>Archive</td>
-            </tr></table>
-        </div>
-        
-        <div id = "left">
-            <center>
-                <h1><p class="headerBigTags">&lt; </p>The <br />Okay-ish<br />Coder<strong><p class="headerBigTags"> &gt; </p></strong>
-                <br /><br />
-                </h1><hr />
-                <br />This is a little blurby thing. something all fuzzy and motivational.</center>
-                    
-                <br /><hr /><br />
-                About
-                <br /><br />
-                Archive
-                <br /><br />
-                Recent post list
-                <br /><br />
-                <br />           
-            
-        </div>
+        <script>HTMLImporter.import("menu.html");</script>
 
     
     <div id = "main">

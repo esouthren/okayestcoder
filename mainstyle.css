@@ -17,7 +17,9 @@
 body {
     margin: 0;
     font-family: "Karla";
-    background-color: white;
+    background-image: url(code_bg.png);
+    background-attachment: fixed;
+    z-index: -1;
     
 }
 
@@ -83,19 +85,28 @@ a {
 #main {
    width: 100%;
     top: 0;
-    background-color: paleturquoise;
+    left: 0;
+    right: 0;
     font-size: 90%;
-    background-color: white;
+
 }
 
 .post {
-    width = 80%;
-    
-    background-color: #ED2919;
-    margin: 0.5em 1em 2em 1em;
-    position: relative;    
-    
+
+    background-color: cadetblue;
+    margin: 0.5em 0em 2em 0em;
+    position: relative; 
 }
+
+
+mark {
+    font-size: 105%;
+    background-color:aliceblue;
+
+    line-height: 1.5;
+}
+ 
+
 
 .postContent:hover {
     background-color:aliceblue;
@@ -104,36 +115,44 @@ a {
 .post2 {
     width = 80%;
     
-    background-color: #EB7318;
-    margin: 0.5em 1em 2em 1em;
+    background-color: paleturquoise;
+    margin: 0.5em 0em 2em 0em;
     position: relative;    
     
 }
 
 .postContent {
     width: 100%;
-    left: 10px;
+    left: 100px;
     padding: 0em 0em 1em 1.5em;
     background-color: white; 
-    margin-left: 1em; 
-        overflow: hidden;
+    margin-left: 0.75em; 
+    overflow: hidden;
+    clear: both;
 }
 
-.postImg {
-    width: 30%;
-    float: right;
-    background-color: red;
-    margin-left: 40px;
-    
-    
-}
 
 .postContent img {
-    max-width: 20%;
-    
-    margin: 1em 1em 0em 3em;
-    
+    max-height: 1px;
+    visibility: hidden;
+    margin: 1em 5em 0em 3em;
+    float: right;
+    clear: right;
+}
 
+.postContent h2, h3 {
+    line-height: 1;
+}
+
+.postFooter {
+    width: 100%; 
+}
+
+
+
+.postFooterRightCell {
+    text-align: right;
+    width: 40%;
 }
 
 .article {
@@ -149,9 +168,13 @@ a {
 
 @media (min-width: 700px)  {   
     
-    #main {
-        left: 0%;
-    }
+#main {
+   width: 55%;
+    top: 0;
+    margin-left: 25%;
+    font-size: 90%;
+    position: absolute;
+}
     
 #left {
 
@@ -173,15 +196,6 @@ a {
 }
 
 
-    #main {
-        
-        position: absolute;
-    }
-
-
-
-
-
 .headerBigTags {
     font-size: 120%;
     display: inline;
@@ -193,25 +207,19 @@ a {
 
 #left hr {
     width: 90%;
+    text-align:left;margin-left:0
 }
 
-#main {
-   width: 55%;
-    top: 0;
-    background-color: paleturquoise;
-    margin-left: 30%;
-    font-size: 90%;
-    background-color: white;
-}
+
 
 .post {
     width = 80%;
-    
-    background-color: #ED2919;
     margin: 0.5em 1em 2em 1em;
     position: relative;    
     
 }
+    
+    
 
 .postContent:hover {
     background-color:aliceblue;
@@ -219,8 +227,6 @@ a {
 
 .post2 {
     width = 80%;
-    
-    background-color: #EB7318;
     margin: 0.5em 1em 2em 1em;
     position: relative;    
     
@@ -228,32 +234,33 @@ a {
 
 .postContent {
     width: 100%;
-    left: 10px;
-    padding: 0em 0em 1em 1.5em;
+   
+   
+   
     background-color: white; 
-    margin-left: 1em; 
+
     overflow: hidden;
 }
 
-.postImg {
-    width: 30%;
-    float: right;
-    background-color: red;
-    margin-left: 40px;
-    
-    
-}
 
 .postContent img {
     max-width: 20%;
-     
+    max-height: 100%;
+    float: right;
     margin: 1em 1em 0em 3em;
-    
+    visibility: visible;
+       clear: right;
 
 }
+    
+.postFooter {
+    width: 70%;
+    float: left;
+}
+
 
 .article {
-        width = 80%;
+    width = 80%;
     
     background-color: white;
     margin: 0.5em 1em 0.5em 1em;
