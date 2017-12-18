@@ -51,7 +51,7 @@
                     <h3>Username</h3>
                     <input type="textbox" chars="100" id="username" />
                     <h3>Password</h3>
-                    <input type="textbox" chars="100" id="password" type="password" />
+                    <input type="password" chars="100" id="password" />
                     <br /><br />
                     <div class="postLog"></div><br />
                     <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />        
@@ -62,14 +62,6 @@
         </div>
     </div>
     <script>
-        function signOut() {
-            firebase.auth().signOut().then(function() {
-              console.log('Signed Out');
-            }, function(error) {
-              console.error('Sign Out Error', error);
-            });
-        }
-
         function logIn(username, password) {
             firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
                   // Handle Errors here.            
@@ -125,7 +117,9 @@
                                 tags : postTags,
                                 // Negative index to maintain order when displaying posts page
                                 index: (count*-1)
-                            }); 
+                                
+                            });
+                            window.location.href = 'index.html';
                         });    
                       } else {
                         console.log("Not signed in!");
@@ -133,8 +127,13 @@
                       }
                 });
             }
-            // Sign out admin
-            signOut();
+                                            // Sign out admin
+                                firebase.auth().signOut().then(function() {
+                                  console.log('Signed Out');
+                                }, function(error) {
+                                  console.error('Sign Out Error', error);
+                                });
+            
         }
     </script>
 </body>
