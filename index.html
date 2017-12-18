@@ -30,7 +30,7 @@
                 var childData = childSnapshot.val();
                 // console.log(childData['tags']);
 
-                    // Generate the HTML for #main
+                // Generate the HTML for #main
             
                 var postNum = (childData['index']);
                 if(parseInt(childData['index']) % 2 == 0) { 
@@ -84,43 +84,37 @@
             -->   
         </div>
             <script>
-            
+            // Display Selected Posts
             function displayPost(postNum) {
-                
-         var database = firebase.database();
-                console.log(postNum);
-                post_string = "";
+                var database = firebase.database();
+                var post_string = "";
             var dataDump = database.ref('posts').orderByChild('index');
      
             dataDump.on('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
-
-                var childData = childSnapshot.val();
+                    var childData = childSnapshot.val();
                         if(childData['index'] == postNum ) {
-                            if(postNum % 2 == 0)
-                            post_string += '<div class="post">';
-                            else{
+                            if(postNum % 2 == 0) {
+                                post_string += '<div class="post">';
+                            }
+                            else {
                                 post_string += '<div class="post2">';
                             }
                             post_string += '<div class="postContentFull">' +
-                            '<h2><a href="index.html">< Return to home</h2>' +
+                            '<h3><a href="index.html">< Return to home</a></h3>' +
                             '<h1>' + childData['title'] + '</h1>' +
-                        '<h3>' + childData['date'] + '</h3>' +
-                                 '<h5><strong>Tags </strong>';
-                for(var i = 0; i < childData['tags'].length; i++) {
-                    post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
-               
-                   
-                }
-                             post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
-                            
-                        }
-                  
+                            '<h3>' + childData['date'] + '</h3>' +
+                            '<h5><strong>Tags </strong>';
+                            // Display all tags
+                            for(var i = 0; i < childData['tags'].length; i++) {
+                                post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';  
+                            }
+                            post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
+                        }                  
                     });
                 });
-                
-                $('#main').html(post_string);
-   
+                // Set data to #main div
+                $('#main').html(post_string);   
             }
             </script>
               

@@ -6,7 +6,7 @@
         <title>Okay-ish Coding</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script>
           // Initialize Firebase
           var config = {
@@ -34,46 +34,34 @@
         </script>
     </head>
     <body>
-        <script>HTMLImporter.import("menu.html");</script>
-        
-    
-
-    
-    <div class="article">
-        <h1>Add A Post</h1>
-            <table class="addPostTable">
-                <tr>
-                    <td>Title</td><td><input type="textbox" id="postTitle" chars="100" /></td>
-                </tr>
-                <tr>
-                    <td>Publish Date</td><td><input type="textbox" id="postDate" chars="100"  /></td>
-                </tr>
-                <tr>
-                    <td>Text</td><td><input type="textbox" chars="100" id="postText" /></td>
-                </tr>
-                <tr>
-                    <td>Tags</td><td><input type="textbox" chars="100" id="postTags"  /></td>
-                </tr>
-                <tr>
-                    <td>Username</td><td><input type="textbox" chars="100" id="username" /></td>
-                </tr>
-                <tr>
-                    <td>Password</td><td><input type="textbox" chars="100" id="password"  /></td>
-                </tr>
-
-
-
-            </table>
-            <br /><br />
-           <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />
-        
-        <br />
-        
-
+    <script>HTMLImporter.import("menu.html");</script>     
+    <div id="main">
+        <div class="post">
+            <div class="postContentFull">
+                <div class="addPostForm">
+                <h1>Add A Post</h1>                
+                    <h3>Title</h3>
+                    <input type="text" id="postTitle"  />
+                    <h3>Publish Date</h3>
+                    <input type="text" id="postDate" />
+                    <h3>Text</h3>
+                    <textarea id="postText" rows="50"></textarea>
+                    <h3>Tags</h3>
+                    <input type="text" id="postTags"  />
+                    <h3>Username</h3>
+                    <input type="textbox" chars="100" id="username" />
+                    <h3>Password</h3>
+                    <input type="textbox" chars="100" id="password" type="password" />
+                    <br /><br />
+                    <div class="postLog"></div><br />
+                    <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />        
+                    <br /><br /><br />
+                    
+                </div>
+            </div>
+        </div>
     </div>
-
-        <script>
-            
+    <script>
         function signOut() {
             firebase.auth().signOut().then(function() {
               console.log('Signed Out');
@@ -81,25 +69,26 @@
               console.error('Sign Out Error', error);
             });
         }
-            
+
         function logIn(username, password) {
             firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
                   // Handle Errors here.            
                   var errorCode = error.code;
                   var errorMessage = error.message;
                   console.log("Invalid Authentication");
+                 $('.postLog').html("Authentication failed, check username and password");
                 });
         }
-        
+
         function submitPost() {
-            
+
             var postTitle = document.getElementById('postTitle').value;
             var postDate = document.getElementById('postDate').value;
             var postText = document.getElementById('postText').value;
             var postTags = document.getElementById('postTags').value;
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
-            
+
             if( (postTitle === "") ||
                 (postDate === "") ||
                 (postText === "") ||
@@ -108,16 +97,15 @@
                 (password === "") )
                 {
                 console.log("Need data!");
+                $('.postLog').html("Error: All Fields Need Data");
             }
             else {
                 postTags = postTags.toLowerCase();
                 postTags = postTags.split(' ');
-                console.log(postTags);
-
-            
+                
                 /* Log in */
                 logIn(username, password);
-                
+
                 /* Check if user is logged in */
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
@@ -141,16 +129,13 @@
                         });    
                       } else {
                         console.log("Not signed in!");
+                         
                       }
                 });
             }
             // Sign out admin
             signOut();
         }
-        
-
-        
-        </script>
-
+    </script>
 </body>
 </html>
