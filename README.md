@@ -20,8 +20,13 @@ Things to Add:
 
 ###### animated changes when clicking on post? may require larger rewrite of post displaying
 
-###### 'about' page
 
 ###### better logo/blurb
 
 ###### prism code highlighting for posts
+
+######   should I encrypt the api key?
+ 
+###### how to hard link posts?
+
+###### overhaul post creater - create easier to use syntax which automates image referencing and text formatting (i.e without having to use html tags? Gets parsed by script after. more like a wordpress post uploader
