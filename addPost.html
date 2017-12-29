@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+                  <script src="htmlImporter.js"></script>
+        <title>The Okay-est Coder</title>
+        <link rel="stylesheet" type="text/css" href="mainstyle.css">
+        <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
+            authDomain: "okayestcoder.firebaseapp.com",
+            databaseURL: "https://okayestcoder.firebaseio.com",
+            projectId: "okayestcoder",
+            storageBucket: "okayestcoder.appspot.com",
+            messagingSenderId: "935764653668"
+          };
+          firebase.initializeApp(config);
+            
+        var database = firebase.database();
+            
+        var leadsRef = database.ref('test');
+            leadsRef.on('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            console.log(childData);
+            });
+                
+        });
+            console.log("hello world!");
+            
+            
+        </script>
+    </head>
+    <body>
+    <script>HTMLImporter.import("menu.html");</script>     
+    <div id="main">
+        <div class="post">
+            <div class="postContentFull">
+                <div class="addPostForm">
+                <h1>Add A Post</h1>  
+                    <input type="button" value="Sign Out" onclick="signOut()" />   
+                    <br /><br />
+                    <input type="file" id="myFile" multiple size="50" onchange="uploadImage()">
+                    <div id="images">
+                    
+                    </div>
+                    <h3>Title</h3>
+                    <input type="text" id="postTitle"  />
+                    <h3>Publish Date</h3>
+                    <input type="text" id="postDate" />
+                    <h3>Text</h3>
+                    <textarea id="postText" rows="50"></textarea>
+                    <h3>Tags</h3>
+                    <input type="text" id="postTags"  />
+                    <br /><br />
+                    <div class="postLog"></div><br />
+                    <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />        
+                    <br /><br /><br />
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $( document ).ready(function() {
+            logIn();
+        });
+        
+        function logIn() {
+            // sign in pop up
+            var user = firebase.auth().currentUser;
+            if (user) {
+                console.log("User is signed in");   
+            } 
+            else {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(function(result) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = result.credential.accessToken;
+                // The signed-in user info.
+                var user = result.user;
+                console.log("User signed in");
+                }).catch(function(error) {
+                    console.log("login error :/");
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential; 
+                });             
+            }
+        }
+                
+        function submitPost() {
+
+            var postTitle = document.getElementById('postTitle').value;
+            var postDate = document.getElementById('postDate').value;
+            var postText = document.getElementById('postText').value;
+            var postTags = document.getElementById('postTags').value;
+
+
+            if( (postTitle === "") ||
+                (postDate === "") ||
+                (postText === "") ||
+                (postTags === "") )
+                {
+                console.log("Need data!");
+                $('.postLog').html("Error: All Fields Need Data");
+            }
+            else {
+                postTags = postTags.toLowerCase();
+                postTags = postTags.split(' ');
+                
+                /* Log in */
+  
+
+                /* Check if user is logged in */
+                var user = firebase.auth().currentUser;
+                    if (user) {
+                    
+                        console.log("User is signed in!");
+                        // Increment 'PostCount' by 1
+                        firebase.database().ref('/count/postCount').once('value').then(function(snapshot) {
+                            var count = (snapshot.val());
+                            count +=1;            
+                            firebase.database().ref('count').set({
+                                postCount: count
+                                 });
+                            // Write Post Data
+                            firebase.database().ref('posts/post' + count).set({
+                                title: postTitle,
+                                date: postDate,
+                                text : postText,
+                                tags : postTags,
+                                // Negative index to maintain order when displaying posts page
+                                index: (count*-1)
+                                
+                            });
+                            window.location.href = 'index.html';
+                        });    
+                      } 
+                        else {
+                            console.log("Not signed in!");
+                            logIn();
+                            submitPost();
+                      }
+            
+            }
+            // Sign out admin
+            signOut();
+            
+        }
+        
+        function signOut() {
+            // Sign out admin
+            firebase.auth().signOut().then(function() {
+              console.log('Signed Out');
+            }, function(error) {
+              console.error('Sign Out Error', error);
+            });
+        }
+        
+        // File or Blob named mountains.jpg
+        function uploadImage() {
+            var user = firebase.auth().currentUser;
+                if (user) {
+
+                   const ref = firebase.storage().ref();
+                    const file = document.querySelector('#myFile').files[0]
+                    const name = (+new Date()) + '-' + file.name;
+                    const metadata = {
+                      contentType: file.type
+                    };
+                    const task = ref.child(name).put(file, metadata);
+                    task.then((snapshot) => {
+                      const url = snapshot.downloadURL;
+                      console.log(url);
+                    var images = $('#images').html();
+                        console.log(images);
+                        images += "<img src='" + url + "' width='100' />";
+                        $('#images').html(images);   
+
+                    }).catch((error) => {
+                      console.error(error);
+                    });
+                                // Sign out admin
+                    }
+       
+              else {
+                  logIn();
+              }
+               
+        
+        
+        }
+        
+    </script>
+</body>
+</html>
