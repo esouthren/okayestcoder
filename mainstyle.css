@@ -134,12 +134,21 @@ mark {
     border-left: 0;
 }
 
-.postContent img {
+.thumbnail {
     max-height: 1px;
     visibility: hidden;
     margin: 1em 5em 0em 3em;
     float: right;
     clear: right;
+}
+
+.postContentFull img {
+    width: 80%;
+    margin: 3em 0em 3em 0em;
+    margin-left: 8%;
+    margin-right: 12;
+    display: block;
+    
 }
 
 .postContent h2, h3 {

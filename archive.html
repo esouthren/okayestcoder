@@ -20,34 +20,26 @@
           firebase.initializeApp(config);
             var database = firebase.database();
             var dataDump = database.ref('posts').orderByChild('index');
-            var string_of_posts = "";
+            
+            var string_of_posts = '<div class="post"><div class="postContentFull"><div class="addPostForm"><h1>Archive</h1><ul>';
             dataDump.on('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     var childData = childSnapshot.val();
                     // Generate the HTML for #main - all of the posts
             
                     var postNum = (childData['index']);
-                    if(parseInt(childData['index']) % 2 == 0) { 
-                        string_of_posts += '<div class="post" onclick="displayPost(' + postNum + ')">';
-                    } 
-                    else {
-                       string_of_posts += '<div class="post2" onclick="displayPost(' + postNum + ')">';
-                    }
-                     string_of_posts += '<div class="postContent"><img src="testimg.jpg" class="thumbnail" align="right" alt="test!" />' +
-                            '<h2>' + childData['title'] + '</h2>' +
-                            '<h3>' + childData['date'] + '</h3>' ;
-                    var blurb = childData['text'].slice(0,250);
-                    console.log(blurb);
-                    // Strip HTML tags so we don't get images in the posts list
-                    var blurbStripped = blurb.replace(/<[^>]+>/g, ''); 
-                    string_of_posts += blurbStripped + '....<strong> Continue</strong><br />' +
-                        '<h5><strong>Tags </strong>';
+                    string_of_posts += '<br /><h3><li><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></li></h3>';
+                    
+
                     // Display all tags of a post
+                    string_of_posts +=  '<h5><strong>Tags </strong>';
                     for(var i = 0; i < childData['tags'].length; i++) {
                         string_of_posts += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
                     }
-                    string_of_posts += '</h5></div></div>';
+
+                    string_of_posts += '</h5>';
                 });
+                string_of_posts += '</ul><br /></div>';
                 // Map HTML to #main div content
                 var list_of_posts = string_of_posts;
                 $('#main').html(list_of_posts);   
@@ -85,7 +77,7 @@
                             post_string += '<div class="post2">';
                         }
                     post_string += '<div class="postContentFull">' +
-                    '<h3><a href="index.html">< Return to home</a></h3>' +
+                    '<h3><a href="archive.html">< Return to Archive</a></h3>' +
                     '<h1>' + childData['title'] + '</h1>' +
                     '<h3>' + childData['date'] + '</h3>' +
                     '<h5><strong>Tags </strong>';
