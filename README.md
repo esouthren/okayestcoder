@@ -1,9 +1,9 @@
 # the okay-est coder
 My coding/venting blog. Jquery, Firebase backend for post storage.
 
-Live at: (https://esouthren.github.io/okayestcoder/index.html)
+Live at: https://esouthren.github.io/okayestcoder/index.html
 
-Thanks to (http://prismjs.com/) for code highlighting in posts
+Thanks to http://prismjs.com/ for code highlighting in posts
 
 Things to Add:
 
@@ -24,7 +24,7 @@ Things to Add:
 
 ~~###### better logo/blurb~~
 
-###### prism code highlighting for posts
+~~###### prism code highlighting for posts~~
 
 ######   should I encrypt the api key?
  
