@@ -41,8 +41,8 @@
             <div class="postContentFull">
                 <div class="addPostForm">
                 <h1>Add A Post</h1>  
-                    <h2><div id="logInStatus"></div></h2><br />
-                    <input type="button" value="Sign In" onclick="logIn()" />   
+                    <h2><div class="logInStatus"></div></h2><br />
+                    <input type="button" value="Sign In" onclick="logIn()" />                       <input type="button" value="Sign Out" onclick="logOut()" /> 
                     <br /><br />
                     <input type="file" id="myFile" multiple size="50" onchange="uploadImage()">
                     <div id="images">
@@ -72,17 +72,17 @@
             changeIndicatorStatus();
         });
 
-        // change text in addPost.html to indicate whether user is logged in or not
         function changeIndicatorStatus() {
+            // change text in addPost.html to indicate whether user is logged in or not
             var user = firebase.auth().currentUser;
             if (user) {
-                $('#logInStatus').html("You are logged in");
-                $('#logInStatus').css("background-color","green"); 
+                $('.logInStatus').html("You are logged in");
+                $('.logInStatus').css("background-color","green"); 
                 console.log("logged in");
             }
-            else {
-                $('#logInStatus').html("You are not logged in");
-                $('#logInStatus').css("background-color","red"); 
+            if (!user) {
+                $('.logInStatus').html("You are not logged in");
+                $('.logInStatus').css("background-color","red"); 
                 console.log("not logged in");
             }
         }
@@ -101,7 +101,7 @@
                 // The signed-in user info.
                 var user = result.user;
                 console.log("User signed in");
-                changeIndicatorStatus();
+             changeIndicatorStatus();
                 }).catch(function(error) {
                     console.log("login error :/");
                     var errorCode = error.code;
@@ -180,6 +180,7 @@
             // Sign out admin
             firebase.auth().signOut().then(function() {
               console.log('Signed Out');
+            changeIndicatorStatus()
             }, function(error) {
               console.error('Sign Out Error', error);
             });
@@ -209,7 +210,7 @@ $('#images').html(images);
                 });
             }
             else {
-              alert("Upload failed; try refreshing the page to trigger log in");
+              alert("Upload failed, user is not logged in");
             }
                
         
