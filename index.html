@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
-        
         <!-- firebase initialisation -->
         
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
@@ -29,7 +28,6 @@
                     // Create thumbnail url, create default if it doesn't exist
                     var thumbnail_url = childData['thumbnail'];
                     if (thumbnail_url == null) {
-                        console.log('No thumbnail found');
                         thumbnail_url = "testimg.jpg";
                     }
                     
@@ -43,9 +41,8 @@
                      string_of_posts += '<div class="postContent"><img src="' + thumbnail_url + '" class="thumbnail" align="right" alt="test!" />' +
                             '<h2>' + childData['title'] + '</h2>' +
                             '<h3>' + childData['date'] + '</h3>' ;
-                    var blurb = childData['text'].slice(0,250);
-                    console.log(blurb);
                     
+                    var blurb = childData['text'].slice(0,250);               
                     // Strip HTML tags so we don't get images in the posts list
                     var blurbStripped = blurb.replace(/<[^>]+>/g, ''); 
                     string_of_posts += blurbStripped + '....<strong> Continue</strong><br />' +
@@ -66,6 +63,13 @@
         <title>The Okay-est Coder: Home</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
         
+                <!-- Prism Syntax Highlighter 
+        To use: enclose code block in :
+            <code class="language-*language*"> ** code ** </code>
+        -->
+        <link href="prism_highlighter/prism.css" rel="stylesheet" type="text/css" />
+        <script src="prism_highlighter/prism.js" type="text/javascript"></script>
+        
     </head>
     
     <body>
@@ -74,8 +78,10 @@
         <div id="main">
         <!-- Posts will go here; populated by javascript above -->
         </div>
+
         
         <script>
+        
         // Display Selected Post when displayPost() is called
         function displayPost(postNum) {
             var database = firebase.database();
@@ -102,11 +108,15 @@
                         post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';  
                     }
                     post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
+                        
                     }                  
                 });
             });
             // Set data to #main div
-            $('#main').html(post_string);   
+            
+            $('#main').html(post_string);
+            // Re-render prism highlighting on inserted HTML
+            Prism.highlightAll();
         }
         </script>  
     </body>

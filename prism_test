@@ -33,13 +33,6 @@
             
             
         </script>
-        
-        <!-- Prism Syntax Highlighter 
-            To use: enclose code block in :
-            <code class="language-*language*"> ** code ** </code>
-        -->
-        <link href="prism_highlighter/prism.css" rel="stylesheet" type="text/css" />
-        <script src="prism_highlighter/prism.js" type="text/javascript"></script>
     </head>
     <body>
     <script>HTMLImporter.import("menu.html");</script>     
@@ -68,21 +61,7 @@
                     <br /><br />
                     <div class="postLog"></div><br />
                     <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />        
-                    <br /><br /><br /> 
-                    <h3>To add code blocks</h3>
-                    <pre><code class="language-html">
-                    <script type="prism-html-markup">
-<pre>
-    <code class="language-html">
-        <!-- Displaying HTML requires additional <script> tags -->
-        <script type="prism-html-markup"> 
-            <h1>Code goes here</h1>
-        </ script> 
-    </code>
-</pre>
-</script>
-</code></pre>
-  
+                    <br /><br /><br />                    
                 </div>
             </div>
         </div>
