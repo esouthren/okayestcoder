@@ -1,43 +1,37 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width" />
-        
-        <!-- firebase initialisation -->
-        
+        <meta name="viewport" content="width=device-width" />        
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="htmlImporter.js"></script>
+        <link rel="stylesheet" type="text/css" href="mainstyle.css">
+        <title>The Okay-est Coder: Archive</title>
         <script>
-          // Initialize Firebase
-          var config = {
+            // Initialize Firebase
+            var config = {
             apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
             authDomain: "okayestcoder.firebaseapp.com",
             databaseURL: "https://okayestcoder.firebaseio.com",
             projectId: "okayestcoder",
             storageBucket: "okayestcoder.appspot.com",
             messagingSenderId: "935764653668"
-          };
-          firebase.initializeApp(config);
+            };
+            firebase.initializeApp(config);
             var database = firebase.database();
             var dataDump = database.ref('posts').orderByChild('index');
-            
+            // Generate list of post titles 
             var string_of_posts = '<div class="post"><div class="postContentFull"><div class="addPostForm"><h1>Archive</h1><ul>';
             dataDump.on('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     var childData = childSnapshot.val();
-                    // Generate the HTML for #main - all of the posts
-            
                     var postNum = childData['index'];
-
-                    string_of_posts += '<h3><li><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></li></h3>';
-                    
-
+                    string_of_posts += '<h3><li><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></li></h3>';                  
                     // Display all tags of a post
                     string_of_posts +=  '<h5><strong>Tags </strong>';
                     for(var i = 0; i < childData['tags'].length; i++) {
                         string_of_posts += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
                     }
-
                     string_of_posts += '</h5>';
                 });
                 string_of_posts += '</ul><br /></div>';
@@ -45,81 +39,35 @@
                 var list_of_posts = string_of_posts;
                 $('#main').html(list_of_posts);   
             });
-        </script>
-        <script src="htmlImporter.js"></script>
-        
-        <title>The Okay-est Coder: Home</title>
-        <link rel="stylesheet" type="text/css" href="mainstyle.css">
-        
+        </script>      
     </head>
-    
     <body>
-     <script>HTMLImporter.import("menu.html");</script>
-
+        <script>HTMLImporter.import("menu.html");</script>
         <div id="main">
-        <!-- Posts will go here; populated by javascript above -->
+        <!-- Archive list will go here; populated by javascript above -->
         </div>
-        
+
         <script>
 
-        // Display Selected Post when displayPost() is called
-        function displayPost(postNum) {
-
-                console.log("displaying post");
+            function displayPost(postNum) {
+                // Display Selected Post when displayPost() is called
+                // Links to index.html and adds link parameter of post title
                 var database = firebase.database();
-            var post_string = "";
-            var dataDump = database.ref('posts').orderByChild('index');
-            var postTitle ="";
-            dataDump.on('value', function(snapshot) {
-                snapshot.forEach(function(childSnapshot) {
-                    var childData = childSnapshot.val();
-                    if (childData['index'] == postNum) {
-                        console.log("got para: " + childData['title']);
-                        postTitle = childData['title'];
-                        return true;
-                    }
-                });
-            });
-            
-            console.log("in displayPost call: " + postTitle);
-            var newUrl = "index.html?post=" + postTitle;
-            window.location.replace("" + newUrl );
+                var post_string = "";
+                var dataDump = database.ref('posts').orderByChild('index');
+                var postTitle ="";
+                dataDump.on('value', function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        var childData = childSnapshot.val();
+                        if (childData['index'] == postNum) {
+                            postTitle = childData['title'];
+                            return true;
                         }
-       
-            
-            
-            /*
-            var database = firebase.database();
-            var post_string = "";
-            var dataDump = database.ref('posts').orderByChild('index');
-
-            dataDump.on('value', function(snapshot) {
-                snapshot.forEach(function(childSnapshot) {
-                    var childData = childSnapshot.val();
-                    if(childData['index'] == postNum ) {
-                        if(postNum % 2 == 0) {
-                            post_string += '<div class="post">';
-                        }
-                        else {
-                            post_string += '<div class="post2">';
-                        }
-                    post_string += '<div class="postContentFull">' +
-                    '<h3><a href="archive.html">< Return to Archive</a></h3>' +
-                    '<h1>' + childData['title'] + '</h1>' +
-                    '<h3>' + childData['date'] + '</h3>' +
-                    '<h5><strong>Tags </strong>';
-                    // Display all tags
-                    for(var i = 0; i < childData['tags'].length; i++) {
-                        post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';  
-                    }
-                    post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
-                    }                  
-                });
-            });
-            // Set data to #main div
-            $('#main').html(post_string);  
-            */
-        
+                    });
+                });            
+                var newUrl = "index.html?post=" + postTitle;
+                window.location.replace("" + newUrl );
+            }
         </script>  
     </body>
 </html>

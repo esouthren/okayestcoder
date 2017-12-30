@@ -2,161 +2,139 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
-                  <script src="htmlImporter.js"></script>
-        <title>The Okay-est Coder</title>
+        <script src="htmlImporter.js"></script>
+        <title>The Okay-est Coder: Add A Post</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script>
-          // Initialize Firebase
-          var config = {
-            apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
-            authDomain: "okayestcoder.firebaseapp.com",
-            databaseURL: "https://okayestcoder.firebaseio.com",
-            projectId: "okayestcoder",
-            storageBucket: "okayestcoder.appspot.com",
-            messagingSenderId: "935764653668"
-          };
-          firebase.initializeApp(config);
-            
-        var database = firebase.database();
-            
-        var leadsRef = database.ref('test');
-            leadsRef.on('value', function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-            var childData = childSnapshot.val();
-            console.log(childData);
-            });
-                
-        });
-            console.log("hello world!");
-            
-            
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
+                authDomain: "okayestcoder.firebaseapp.com",
+                databaseURL: "https://okayestcoder.firebaseio.com",
+                projectId: "okayestcoder",
+                storageBucket: "okayestcoder.appspot.com",
+                messagingSenderId: "935764653668"
+            };
+            firebase.initializeApp(config);  
         </script>
-        
-        <!-- Prism Syntax Highlighter 
-            To use: enclose code block in :
-            <code class="language-*language*"> ** code ** </code>
-        -->
         <link href="prism_highlighter/prism.css" rel="stylesheet" type="text/css" />
         <script src="prism_highlighter/prism.js" type="text/javascript"></script>
     </head>
     <body>
-    <script>HTMLImporter.import("menu.html");</script>     
-    <div id="main">
-        <div class="post">
-            <div class="postContentFull">
-                <div class="addPostForm">
-                <h1>Add A Post</h1>  
-                    <h2><div class="logInStatus"></div></h2><br />
-                    <input type="button" value="Sign In" onclick="logIn()" />                       <input type="button" value="Sign Out" onclick="logOut()" /> 
-                    <br /><br />
-                    <input type="file" id="myFile" multiple size="50" onchange="uploadImage()">
-                    <div id="images">
-                    
+        <script>HTMLImporter.import("menu.html");</script>     
+        <div id="main">
+            <div class="post">
+                <div class="postContentFull">
+                    <div class="addPostForm">
+                        <h1>Add A Post</h1>  
+                        <h2><div class="logInStatus"></div></h2><br />
+                        <input type="button" value="Sign In" onclick="logIn()" />                       
+                        <input type="button" value="Sign Out" onclick="logOut()" /> 
+                        <br /><br />
+                        <input type="file" id="myFile" multiple size="50" onchange="uploadImage()">
+                        <div id="images"></div>
+                        <h3>Title</h3>
+                        <input type="text" id="postTitle"  />
+                        <h3>Publish Date</h3>
+                        <input type="text" id="postDate" />
+                        <h3>Thumbnail Url</h3>
+                        <input type="text" id="thumbnail" />
+                        <h3>Text</h3>
+                        <textarea id="postText" rows="50"></textarea>
+                        <h3>Tags (seperate by space)</h3>
+                        <input type="text" id="postTags"  />
+                        <br /><br />
+                        <div class="postLog"></div><br />
+                        <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />        
+                        <br /><br /><br /> 
+                        <h3>To add code blocks</h3>
+                        <pre><code class="language-html">
+                        <script type="prism-html-markup">
+    <pre>
+        <code class="language-html">
+            <!-- Displaying HTML requires additional <script> tags -->
+            <script type="prism-html-markup"> 
+                <h1>Code goes here</h1>
+            </ script> 
+        </code>
+    </pre>
+                        </script></code></pre>  
                     </div>
-                    <h3>Title</h3>
-                    <input type="text" id="postTitle"  />
-                    <h3>Publish Date</h3>
-                    <input type="text" id="postDate" />
-                    <h3>Thumbnail Url</h3>
-                    <input type="text" id="thumbnail" />
-                    <h3>Text</h3>
-                    <textarea id="postText" rows="50"></textarea>
-                    <h3>Tags (seperate by space)</h3>
-                    <input type="text" id="postTags"  />
-                    <br /><br />
-                    <div class="postLog"></div><br />
-                    <input id="clickMe" type="button" value="Submit" onclick="submitPost()" />        
-                    <br /><br /><br /> 
-                    <h3>To add code blocks</h3>
-                    <pre><code class="language-html">
-                    <script type="prism-html-markup">
-<pre>
-    <code class="language-html">
-        <!-- Displaying HTML requires additional <script> tags -->
-        <script type="prism-html-markup"> 
-            <h1>Code goes here</h1>
-        </ script> 
-    </code>
-</pre>
-</script>
-</code></pre>
-  
                 </div>
             </div>
         </div>
-    </div>
-    <script>
+        <script>
         
-        $( document ).ready(function() {
-            changeIndicatorStatus();
-        });
+            $( document ).ready(function() {
+                changeIndicatorStatus();
+            });
 
-        function changeIndicatorStatus() {
-            // change text in addPost.html to indicate whether user is logged in or not
-            var user = firebase.auth().currentUser;
-            if (user) {
-                $('.logInStatus').html("You are logged in");
-                $('.logInStatus').css("background-color","green"); 
-                console.log("logged in");
-            }
-            if (!user) {
-                $('.logInStatus').html("You are not logged in");
-                $('.logInStatus').css("background-color","red"); 
-                console.log("not logged in");
-            }
-        }
-        
-        function logIn() {
-            // sign in pop up
-            var user = firebase.auth().currentUser;
-            if (user) {
-                console.log("User is signed in");   
-            } 
-            else {
-                var provider = new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(provider).then(function(result) {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                var token = result.credential.accessToken;
-                // The signed-in user info.
-                var user = result.user;
-                console.log("User signed in");
-             changeIndicatorStatus();
-                }).catch(function(error) {
-                    console.log("login error :/");
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    // The email of the user's account used.
-                    var email = error.email;
-                    // The firebase.auth.AuthCredential type that was used.
-                    var credential = error.credential; 
-                });             
-            }
-        }
-                
-        function submitPost() {
-
-            var postTitle = document.getElementById('postTitle').value;
-            var postDate = document.getElementById('postDate').value;
-            var postText = document.getElementById('postText').value;
-            var postTags = document.getElementById('postTags').value;
-            var postThumbnail = document.getElementById('thumbnail').value;
-
-            if( (postTitle === "") ||
-                (postDate === "") ||
-                (postText === "") ||
-                (postTags === "") )
-                {
-                console.log("Need data!");
-                $('.postLog').html("Error: All Fields Need Data");
-            }
-            else {
-                postTags = postTags.toLowerCase();
-                postTags = postTags.split(' ');
-
-                /* Check if user is logged in */
+            function changeIndicatorStatus() {
+                // change text in addPost.html to indicate whether user is logged in or not
                 var user = firebase.auth().currentUser;
+                if (user) {
+                    $('.logInStatus').html("You are logged in");
+                    $('.logInStatus').css("background-color","green"); 
+                    console.log("logged in");
+                }
+                if (!user) {
+                    $('.logInStatus').html("You are not logged in");
+                    $('.logInStatus').css("background-color","red"); 
+                    console.log("not logged in");
+                }
+            }
+
+            function logIn() {
+                // sign in pop up
+                var user = firebase.auth().currentUser;
+                if (user) {
+                    console.log("User is signed in");   
+                } 
+                else {
+                    var provider = new firebase.auth.GoogleAuthProvider();
+                    firebase.auth().signInWithPopup(provider).then(function(result) {
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        var token = result.credential.accessToken;
+                        // The signed-in user info.
+                        var user = result.user;
+                        console.log("User signed in");
+                        changeIndicatorStatus();
+                    }).catch(function(error) {
+                        console.log("login error :/");
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential; 
+                    });             
+                }
+            }
+
+            function submitPost() {
+                // Upload post to firebase
+                var postTitle = document.getElementById('postTitle').value;
+                var postDate = document.getElementById('postDate').value;
+                var postText = document.getElementById('postText').value;
+                var postTags = document.getElementById('postTags').value;
+                var postThumbnail = document.getElementById('thumbnail').value;
+
+                if( (postTitle === "") ||
+                    (postDate === "") ||
+                    (postText === "") ||
+                    (postTags === "") )
+                    {
+                    console.log("Need data!");
+                    $('.postLog').html("Error: All Fields Need Data");
+                }
+                else {
+                    postTags = postTags.toLowerCase();
+                    postTags = postTags.split(' ');
+
+                    /* Check if user is logged in */
+                    var user = firebase.auth().currentUser;
                     if (user) {                    
                         console.log("User is signed in!");
                         // Increment 'PostCount' by 1
@@ -175,7 +153,7 @@
                                 thumbnail : postThumbnail,
                                 // Negative index to maintain order when displaying posts page
                                 index: (count*-1)
-                                
+
                             });
                             console.log("Data written!");
                             window.location.href = 'index.html';
@@ -185,56 +163,56 @@
                     else {
                         alert("Upload failed; try refreshing the page to trigger log in");
                     }
-            }   
-        }
-        
-        function logOut() {
-            // Sign out admin
-            firebase.auth().signOut().then(function() {
-                changeIndicatorStatus()
-            }, function(error) {
-              console.error('Sign Out Error', error);
-            });
-        }
-        
-        function uploadImage() {
-            var user = firebase.auth().currentUser;
-            if (user) {
-                const ref = firebase.storage().ref('post_images');
-                const file = document.querySelector('#myFile').files[0]
-                const name = (+new Date()) + '-' + file.name;
-                const metadata = {
-                  contentType: file.type
-                };
-                const task = ref.child(name).put(file, metadata);
-                task.then((snapshot) => {
-                    const url = snapshot.downloadURL;
-                    console.log(url);
-                    // Update page with newly uploaded image
-                    var images = $('#images').html();
-                    console.log(images);
-                    images += '<img src="' + url + '" width="100" /><button onclick="copyToClipboard(\'' + url + '\')">Copy URL </button><br />';
-$('#images').html(images);   
-                }).catch((error) => {
-                  console.error(error);
+                }   
+            }
+
+            function logOut() {
+                // Sign out of user account
+                firebase.auth().signOut().then(function() {
+                    changeIndicatorStatus()
+                }, function(error) {
+                  console.error('Sign Out Error', error);
                 });
             }
-            else {
-              alert("Upload failed, user is not logged in");
+
+            function uploadImage() {
+                // Upload image to firebase
+                var user = firebase.auth().currentUser;
+                if (user) {
+                    const ref = firebase.storage().ref('post_images');
+                    const file = document.querySelector('#myFile').files[0]
+                    const name = (+new Date()) + '-' + file.name;
+                    const metadata = {
+                      contentType: file.type
+                    };
+                    const task = ref.child(name).put(file, metadata);
+                    task.then((snapshot) => {
+                        const url = snapshot.downloadURL;
+                        console.log(url);
+                        // Update page with newly uploaded image
+                        var images = $('#images').html();
+                        console.log(images);
+                        images += '<img src="' + url + '" width="100" /><button onclick="copyToClipboard(\'' + url + '\')">Copy URL </button><br />';
+                        $('#images').html(images);   
+                    }).catch((error) => {
+                        console.error(error);
+                    });
+                }
+                else {
+                  alert("Upload failed, user is not logged in");
+                }
             }
-        }
-        
-        function copyToClipboard(texty) {
-            // Copy the URL link to the clipboard to insert into img tag
-            // Creates temporary text element, appends our text, and copies the selected 'focus'
-            console.log("copying...");
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val(texty).select();
-            document.execCommand("copy");
-            $temp.remove();
-        }
-        
-    </script>
-</body>
+
+            function copyToClipboard(texty) {
+                // Copy the URL link to the clipboard to insert into img tag
+                // Creates temporary text element, appends our text, and copies the selected 'focus'
+                console.log("copying...");
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(texty).select();
+                document.execCommand("copy");
+                $temp.remove();
+            }        
+        </script>
+    </body>
 </html>
