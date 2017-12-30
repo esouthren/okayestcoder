@@ -31,11 +31,11 @@ pre[class*="language-"] {
 
 /* Code blocks */
 pre[class*="language-"] {
-	padding: 0em 1em 1em 1em;
+	padding: 0em 0em 1em 1em;
 	margin: .5em 0;
 	overflow: auto;
 	border-radius: 0.3em;
-    width: 90%;
+    width: 75%;
 
 }
 
