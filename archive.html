@@ -27,7 +27,8 @@
                     var childData = childSnapshot.val();
                     // Generate the HTML for #main - all of the posts
             
-                    var postNum = (childData['index']);
+                    var postNum = childData['index'];
+
                     string_of_posts += '<h3><li><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></li></h3>';
                     
 
@@ -60,8 +61,34 @@
         </div>
         
         <script>
+
         // Display Selected Post when displayPost() is called
         function displayPost(postNum) {
+
+                console.log("displaying post");
+                var database = firebase.database();
+            var post_string = "";
+            var dataDump = database.ref('posts').orderByChild('index');
+            var postTitle ="";
+            dataDump.on('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childData = childSnapshot.val();
+                    if (childData['index'] == postNum) {
+                        console.log("got para: " + childData['title']);
+                        postTitle = childData['title'];
+                        return true;
+                    }
+                });
+            });
+            
+            console.log("in displayPost call: " + postTitle);
+            var newUrl = "index.html?post=" + postTitle;
+            window.location.replace("" + newUrl );
+                        }
+       
+            
+            
+            /*
             var database = firebase.database();
             var post_string = "";
             var dataDump = database.ref('posts').orderByChild('index');
@@ -90,8 +117,9 @@
                 });
             });
             // Set data to #main div
-            $('#main').html(post_string);   
-        }
+            $('#main').html(post_string);  
+            */
+        
         </script>  
     </body>
 </html>

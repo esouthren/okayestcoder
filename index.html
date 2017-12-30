@@ -6,7 +6,21 @@
         
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script src="htmlImporter.js"></script>
+        
+        <title>The Okay-est Coder: Home</title>
+        <link rel="stylesheet" type="text/css" href="mainstyle.css">
+        
+                <!-- Prism Syntax Highlighter 
+        To use: enclose code block in :
+            <code class="language-*language*"> ** code ** </code>
+        -->
+        <link href="prism_highlighter/prism.css" rel="stylesheet" type="text/css" />
+        <script src="prism_highlighter/prism.js" type="text/javascript"></script>
         <script>
+
+            
+
           // Initialize Firebase
           var config = {
             apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
@@ -17,6 +31,49 @@
             messagingSenderId: "935764653668"
           };
           firebase.initializeApp(config);
+        
+
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+            
+        function findPostFromParameter(para) {
+                console.log("displaying post");
+                var database = firebase.database();
+            var post_string = "";
+            var dataDump = database.ref('posts').orderByChild('index');
+            var postNum = null;
+            dataDump.on('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childData = childSnapshot.val();
+                    if (childData['title'] == para) {
+                        postNum = childData['index'];
+                        // Display found post
+                        displayPost(postNum);
+                        return true;
+                    }
+                });
+            });            
+        }
+            
+        var para = getUrlParameter('post');
+        console.log("para: " + para);
+            
+        if (para == "" ) {
+            // If the URL has no parameter, display all posts
+            displayAllPosts();
+        }
+            else {
+                // Otherwise, get post from parameter name and display
+                findPostFromParameter(para);
+ 
+            }
+            
+                                 
+        function displayAllPosts() {    
             var database = firebase.database();
             var dataDump = database.ref('posts').orderByChild('index');
             var string_of_posts = "";
@@ -24,13 +81,13 @@
                 snapshot.forEach(function(childSnapshot) {
                     var childData = childSnapshot.val();
                     // Generate the HTML for #main - all of the posts
-                    
+
                     // Create thumbnail url, create default if it doesn't exist
                     var thumbnail_url = childData['thumbnail'];
                     if (thumbnail_url == null) {
                         thumbnail_url = "testimg.jpg";
                     }
-                    
+
                     var postNum = (childData['index']);
                     if(parseInt(childData['index']) % 2 == 0) { 
                         string_of_posts += '<div class="post" onclick="displayPost(' + postNum + ')">';
@@ -41,7 +98,7 @@
                      string_of_posts += '<div class="postContent"><img src="' + thumbnail_url + '" class="thumbnail" align="right" alt="test!" />' +
                             '<h2>' + childData['title'] + '</h2>' +
                             '<h3>' + childData['date'] + '</h3>' ;
-                    
+
                     var blurb = childData['text'].slice(0,250);               
                     // Strip HTML tags so we don't get images in the posts list
                     var blurbStripped = blurb.replace(/<[^>]+>/g, ''); 
@@ -57,35 +114,14 @@
                 var list_of_posts = string_of_posts;
                 $('#main').html(list_of_posts);   
             });
-        </script>
-        <script src="htmlImporter.js"></script>
-        
-        <title>The Okay-est Coder: Home</title>
-        <link rel="stylesheet" type="text/css" href="mainstyle.css">
-        
-                <!-- Prism Syntax Highlighter 
-        To use: enclose code block in :
-            <code class="language-*language*"> ** code ** </code>
-        -->
-        <link href="prism_highlighter/prism.css" rel="stylesheet" type="text/css" />
-        <script src="prism_highlighter/prism.js" type="text/javascript"></script>
-        
-    </head>
-    
-    <body>
-     <script>HTMLImporter.import("menu.html");</script>
-
-        <div id="main">
-        <!-- Posts will go here; populated by javascript above -->
-        </div>
-
-        
-        <script>
-        
+        }
+            
         // Display Selected Post when displayPost() is called
         function displayPost(postNum) {
+            console.log("displaying post: " + postNum);
             var database = firebase.database();
             var post_string = "";
+            var post_title = "";
             var dataDump = database.ref('posts').orderByChild('index');
 
             dataDump.on('value', function(snapshot) {
@@ -108,16 +144,60 @@
                         post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';  
                     }
                     post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
+                    post_title = childData['title']  
+
                         
                     }                  
                 });
             });
+                                        // add url parameter
+                        console.log("adding parameter: " + post_title);
+                        var para = getUrlParameter('post'); 
+                            if (para != post_title) {
+                                addOrUpdateUrlParam("post", post_title);
+                        }
+                        
             // Set data to #main div
             
             $('#main').html(post_string);
             // Re-render prism highlighting on inserted HTML
             Prism.highlightAll();
         }
+            
+            
+                        
+
+            
+        </script>
+        
+        
+
+        
+    </head>
+    
+    <body>
+     <script>HTMLImporter.import("menu.html");</script>
+
+        <div id="main">
+        <!-- Posts will go here; populated by javascript above -->
+        </div>
+
+        
+        <script>
+        
+            
+            
+            function addOrUpdateUrlParam(name, value) {
+
+                  var href = window.location.href;
+                var pageUrl = window.location.href + "?post=" + value;
+                console.log("pageurl: " + pageUrl);
+                window.history.pushState('','',pageUrl);
+                
+                }
+            
+            
+
         </script>  
     </body>
 </html>
