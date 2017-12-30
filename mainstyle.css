@@ -178,6 +178,26 @@ mark {
     color: red;
 }
 
+.about img {
+    width: 50%; 
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.about a {
+    color: cadetblue;
+}
+
+.about a:hover {
+    color: paleturquoise;
+}
+
+#logInStatus {
+    width: 100%;
+   
+    padding: 0.25em 1em 0.25em 1em;
+}
+
 
 /* tablets */
 
@@ -280,6 +300,12 @@ mark {
         width: 70%;
         float: left;
     }
+    
+    .about img {
+    width: 30%; 
+    margin-left: 35%;
+    margin-right: 35%;
+}
 
 }
 

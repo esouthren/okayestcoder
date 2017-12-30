@@ -25,7 +25,14 @@
                 snapshot.forEach(function(childSnapshot) {
                     var childData = childSnapshot.val();
                     // Generate the HTML for #main - all of the posts
-            
+                    
+                    // Create thumbnail url, create default if it doesn't exist
+                    var thumbnail_url = childData['thumbnail'];
+                    if (thumbnail_url == null) {
+                        console.log('No thumbnail found');
+                        thumbnail_url = "testimg.jpg";
+                    }
+                    
                     var postNum = (childData['index']);
                     if(parseInt(childData['index']) % 2 == 0) { 
                         string_of_posts += '<div class="post" onclick="displayPost(' + postNum + ')">';
@@ -33,11 +40,12 @@
                     else {
                        string_of_posts += '<div class="post2" onclick="displayPost(' + postNum + ')">';
                     }
-                     string_of_posts += '<div class="postContent"><img src="testimg.jpg" class="thumbnail" align="right" alt="test!" />' +
+                     string_of_posts += '<div class="postContent"><img src="' + thumbnail_url + '" class="thumbnail" align="right" alt="test!" />' +
                             '<h2>' + childData['title'] + '</h2>' +
                             '<h3>' + childData['date'] + '</h3>' ;
                     var blurb = childData['text'].slice(0,250);
                     console.log(blurb);
+                    
                     // Strip HTML tags so we don't get images in the posts list
                     var blurbStripped = blurb.replace(/<[^>]+>/g, ''); 
                     string_of_posts += blurbStripped + '....<strong> Continue</strong><br />' +

@@ -41,7 +41,8 @@
             <div class="postContentFull">
                 <div class="addPostForm">
                 <h1>Add A Post</h1>  
-                    <input type="button" value="Sign Out" onclick="logOut()" />   
+                    <h2><div id="logInStatus"></div></h2><br />
+                    <input type="button" value="Sign In" onclick="logIn()" />   
                     <br /><br />
                     <input type="file" id="myFile" multiple size="50" onchange="uploadImage()">
                     <div id="images">
@@ -51,6 +52,8 @@
                     <input type="text" id="postTitle"  />
                     <h3>Publish Date</h3>
                     <input type="text" id="postDate" />
+                    <h3>Thumbnail Url</h3>
+                    <input type="text" id="thumbnail" />
                     <h3>Text</h3>
                     <textarea id="postText" rows="50"></textarea>
                     <h3>Tags</h3>
@@ -66,8 +69,23 @@
     <script>
         
         $( document ).ready(function() {
-            logIn();
+            changeIndicatorStatus();
         });
+
+        // change text in addPost.html to indicate whether user is logged in or not
+        function changeIndicatorStatus() {
+            var user = firebase.auth().currentUser;
+            if (user) {
+                $('#logInStatus').html("You are logged in");
+                $('#logInStatus').css("background-color","green"); 
+                console.log("logged in");
+            }
+            else {
+                $('#logInStatus').html("You are not logged in");
+                $('#logInStatus').css("background-color","red"); 
+                console.log("not logged in");
+            }
+        }
         
         function logIn() {
             // sign in pop up
@@ -83,6 +101,7 @@
                 // The signed-in user info.
                 var user = result.user;
                 console.log("User signed in");
+                changeIndicatorStatus();
                 }).catch(function(error) {
                     console.log("login error :/");
                     var errorCode = error.code;
@@ -101,6 +120,7 @@
             var postDate = document.getElementById('postDate').value;
             var postText = document.getElementById('postText').value;
             var postTags = document.getElementById('postTags').value;
+            var postThumbnail = document.getElementById('thumbnail').value;
 
 
             if( (postTitle === "") ||
@@ -136,6 +156,7 @@
                                 date: postDate,
                                 text : postText,
                                 tags : postTags,
+                                thumbnail : postThumbnail,
                                 // Negative index to maintain order when displaying posts page
                                 index: (count*-1)
                                 

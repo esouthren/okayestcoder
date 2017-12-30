@@ -1,3 +1,8 @@
+<!-- 
+This code defines the desktop menu and mobile menu. It is inserted into any HTML page via 
+<script>HTMLImporter.import("menu.html");</script>
+-->
+
 <div id="mobileMenu">
     <table class="mobileMenuTable">
         <tr>
@@ -10,6 +15,7 @@
                     </h4>
                 </a>
             </td>
+            <td>Other thing</td>
             <td><a href="about.html">About</a></td>
             <td>Archive</td>
         </tr>
@@ -24,11 +30,24 @@
     <br /><br />
     </h1>
     <hr />
-    <br />This is a little blurby thing. something all fuzzy and motivational.<br />
-<br /><hr /><br />
-    About
+    <br /><div id="menuQuote">.</div>
+    <br /><hr /><br />
+    <a href="about.html">About</a>
     <br /><br />
     <a href="archive.html">Archive</a>
     <br /><br />
+    
+    <br /><br />
     <br />         
 </div>
+
+<script>
+// Get random quote and insert into div "menuQuote"
+    
+quotes = ["Typing okay code since 2015",
+          ];
+
+var quoteline = quotes[Math.floor(Math.random()*quotes.length)];
+$('#menuQuote').html(quoteline);  
+
+</script>
