@@ -3,6 +3,7 @@ My coding/venting blog. Jquery, Firebase backend for post storage.
 
 Live at: (https://esouthren.github.io/okayestcoder/index.html)
 
+Thanks to (http://prismjs.com/) for code highlighting in posts
 
 Things to Add:
 
