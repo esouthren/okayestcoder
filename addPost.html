@@ -43,7 +43,7 @@
                         <input type="text" id="thumbnail" />
                         <h3>Text</h3>
                         <textarea id="postText" rows="50"></textarea>
-                        <h3>Tags (seperate by space)</h3>
+                        <h3>Tags (seperate by comma)</h3>
                         <input type="text" id="postTags"  />
                         <br /><br />
                         <div class="postLog"></div><br />
@@ -133,7 +133,7 @@
                 }
                 else {
                     postTags = postTags.toLowerCase();
-                    postTags = postTags.split(' ');
+                    postTags = postTags.split(',');
 
                     /* Check if user is logged in */
                     var user = firebase.auth().currentUser;
@@ -232,7 +232,7 @@
                 var images = "";
                 for (var i = 0; i < imagesList.length; i++) {
                     var fileName = imagesList[i] + '';
-                    var slash = fileName.lastIndexOf('2F') +2;
+                    var slash = fileName.lastIndexOf('2F') + 2;
                     var end = fileName.lastIndexOf('?');
                     fileName = fileName.slice(slash, end);
                     // Update page with newly uploaded image
