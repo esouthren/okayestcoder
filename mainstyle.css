@@ -132,6 +132,15 @@ mark {
     border-left: 0;
 }
 
+.postContentFull a {
+    color: cadetblue;
+}
+
+
+.postContentFull a:hover {
+    color: darkblue;
+}
+
 .thumbnail {
     max-height: 1px;
     visibility: hidden;
