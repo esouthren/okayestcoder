@@ -20,6 +20,7 @@ Things to Add:
 
 ###### animated changes when clicking on post? may require larger rewrite of post displaying
 
+###### Tag search
 
 ###### better logo/blurb
 
