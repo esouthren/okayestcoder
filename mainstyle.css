@@ -12,7 +12,7 @@ body {
     margin: 0;
     font-family: "Karla";
     background-image: url(code_bg.png);
-    background-attachment: fixed;
+    background-attachment: fixed;   
     z-index: -1;    
 }
 
@@ -203,7 +203,7 @@ mark {
 
 /* tablets */
 
-@media (min-width: 700px)  {   
+@media (min-height: 550px) and (min-width: 700px)  {   
     
     #main {
         width: 70%;
@@ -305,9 +305,13 @@ mark {
 
 }
 
+/* for desktops with low height (menu at top) */ {
+    
+}
+
 /* for desktops */
 
-@media (min-width: 900px)  {     
+@media screen and (min-width: 900px) , and (min-height: 2000px)  {     
 
     #left {
         margin-left: 15%;
@@ -319,3 +323,5 @@ mark {
         width: 55%;  
     }   
 }
+
+
