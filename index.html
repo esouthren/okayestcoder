@@ -79,7 +79,8 @@
                         }
 
                         var postNum = (childData['index']);
-                        if(parseInt(childData['index']) % 2 == 0) { 
+                        console.log("post: " + postNum);
+                        if(parseInt(postNum) % 2 == 0 || postNum == 1) { 
                             string_of_posts += '<div class="post" onclick="displayPost(' + postNum + ')">';
                         } 
                         else {
