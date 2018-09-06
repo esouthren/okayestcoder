@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
         <script>
             // Initialize Firebase
             var config = {
@@ -71,10 +72,15 @@
                         <input type="text" id="index" readonly/>
                         <br /><br />
                         <div class="postLog"></div><br />
-                        <input id="clickMe" type="button" value="Update" onclick="updatePost()" />        
+                        <input id="clickMe" type="button" value="Update" onclick="updatePost()" /> 
+                        <button id="deletePost" style="background-color: red" onclick="deletePostButton()"> Delete Post </button>
                         <br /><br /><br /> 
                         <h3>To add code blocks</h3>
                         <pre><code class="language-html">
+                        
+                        <div id="dialog" title="Confirmation Required">
+                         Are you SURE you want to delete this post?
+                        </div>
                         <script type="prism-html-markup">
     <pre>
         <code class="language-html">
@@ -93,7 +99,42 @@
         
             $( document ).ready(function() {
                 changeIndicatorStatus();
+  
             });
+            
+            // Delete Post Confirmation Box
+
+         function deletePostButton() {
+             // is a post selected?
+             if($("#postToEdit").val() == "") {
+                 alert("You haven't selected a post to delete!");
+             }
+             else {
+                 // are we logged in?
+                 if(!firebase.auth().currentUser) {
+                     alert("You're not logged in!");
+                 }
+                 else {
+                    var r = confirm("Sure you want to delete that?");
+                    if (r == true) {
+                        deletePost();
+                    }
+                 }
+                
+             }
+             // are you logged in?
+             
+         }
+            
+            function deletePost() {
+                var selectedPost = $("#postToEdit").val();
+                var index = document.getElementById('index').value;
+                firebase.database().ref('posts/' + index).set(null);
+                console.log("removed post!");
+                window.location.href = 'index.html';
+                            logOut();
+            }
+
             
             function updateEditPostFields() {
                 var selectedPost = $("#postToEdit").val();
@@ -117,7 +158,7 @@
             var imagesList = [];
 
             function changeIndicatorStatus() {
-                // change text in addPost.html to indicate whether user is logged in or not
+                // change text in editPost.html to indicate whether user is logged in or not
                 var user = firebase.auth().currentUser;
                 if (user) {
                     $('.logInStatus').html("You are logged in");
