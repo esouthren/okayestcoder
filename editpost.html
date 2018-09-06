@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <script src="htmlImporter.js"></script>
+        <title>The Okay-est Coder: Add A Post</title>
+        <link rel="stylesheet" type="text/css" href="mainstyle.css">
+        <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyButp2-SFrYWWGZEZORCtE5K12WATgyPvc",
+                authDomain: "okayestcoder.firebaseapp.com",
+                databaseURL: "https://okayestcoder.firebaseio.com",
+                projectId: "okayestcoder",
+                storageBucket: "okayestcoder.appspot.com",
+                messagingSenderId: "935764653668"
+            };
+            firebase.initializeApp(config);  
+        </script>
+        <link href="prism_highlighter/prism.css" rel="stylesheet" type="text/css" />
+        <script src="prism_highlighter/prism.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <script>HTMLImporter.import("menu.html");</script>     
+        <div id="main">
+            <div class="post">
+                <div class="postContentFull">
+                    <div class="addPostForm">
+                        <h1>Edit Post</h1>  
+                        <h2><div class="logInStatus"></div></h2><br />
+                        <input type="button" value="Sign In" onclick="logIn()" />                       
+                        <input type="button" value="Sign Out" onclick="logOut()" /> 
+                        <br /><br />
+                         <div id="dropDownMenu"></div>
+                        <!-- select file to edit -->
+                        <script>
+                            var database = firebase.database();
+                            
+                            var dataDump = database.ref('posts').orderByChild('index');
+                            
+                            dataDump.on('value', function(snapshot) {
+
+                                var dropdown_string = '<select id="postToEdit" onchange="updateEditPostFields()"><option value=""></option>';
+                                snapshot.forEach(function(childSnapshot) {
+                                    var childData = childSnapshot.val();
+                                    dropdown_string += '<option value="' + childData['index'] + '">' + childData['title'] + '</option>';
+                                                        });
+                           
+                            dropdown_string += '</select>';
+                             $('#dropDownMenu').html(dropdown_string);  
+                            });
+
+                                
+                        </script>
+                        <br />
+                        <input type="file" id="myFile" multiple size="50" onchange="uploadImage()">
+                        <div id="images"></div>
+                        <h3>Title</h3>
+                        <input type="text" id="postTitle"  />
+                        <h3>Publish Date</h3>
+                        <input type="text" id="postDate" />
+                        <h3>Thumbnail Url</h3>
+                        <input type="text" id="thumbnail" />
+                        <h3>Text</h3>
+                        <textarea id="postText" rows="50"></textarea>
+                        <h3>Tags (seperate by comma)</h3>
+                        <input type="text" id="postTags"  />
+                        <br /><br />
+                        <input type="text" id="index" readonly/>
+                        <br /><br />
+                        <div class="postLog"></div><br />
+                        <input id="clickMe" type="button" value="Update" onclick="updatePost()" />        
+                        <br /><br /><br /> 
+                        <h3>To add code blocks</h3>
+                        <pre><code class="language-html">
+                        <script type="prism-html-markup">
+    <pre>
+        <code class="language-html">
+            <!-- Displaying HTML requires additional <script> tags -->
+            <script type="prism-html-markup"> 
+                <h1>Code goes here</h1>
+            </ script> 
+        </code>
+    </pre>
+                        </script></code></pre>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        
+            $( document ).ready(function() {
+                changeIndicatorStatus();
+            });
+            
+            function updateEditPostFields() {
+                var selectedPost = $("#postToEdit").val();
+                 dataDump.on('value', function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        var childData = childSnapshot.val();
+                        if(childData['index'] == selectedPost) {
+                            /* appending "" or "2" to post for correct alternate colour scheme */
+                             $('#postTitle').val(childData['title']);
+                            $('#postDate').val(childData['date']);
+                            $('#thumbnail').val(childData['thumbnail']);
+                            $('#postText').val(childData['text']);
+                            $('#postTags').val(childData['tags']);
+                            $('#index').val(childSnapshot.key);
+
+                        }                  
+                    });
+                });
+            }
+            
+            var imagesList = [];
+
+            function changeIndicatorStatus() {
+                // change text in addPost.html to indicate whether user is logged in or not
+                var user = firebase.auth().currentUser;
+                if (user) {
+                    $('.logInStatus').html("You are logged in");
+                    $('.logInStatus').css("background-color","green"); 
+                    console.log("logged in");
+                }
+                if (!user) {
+                    $('.logInStatus').html("You are not logged in");
+                    $('.logInStatus').css("background-color","red"); 
+                    console.log("not logged in");
+                }
+            }
+
+            function logIn() {
+                // sign in pop up
+                var user = firebase.auth().currentUser;
+                if (user) {
+                    console.log("User is signed in");   
+                } 
+                else {
+                    var provider = new firebase.auth.GoogleAuthProvider();
+                    firebase.auth().signInWithPopup(provider).then(function(result) {
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        var token = result.credential.accessToken;
+                        // The signed-in user info.
+                        var user = result.user;
+                        console.log("User signed in");
+                        changeIndicatorStatus();
+                    }).catch(function(error) {
+                        console.log("login error :/");
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential; 
+                    });             
+                }
+            }
+
+            function updatePost() {
+                // Upload post to firebase
+                var postTitle = document.getElementById('postTitle').value;
+                var postDate = document.getElementById('postDate').value;
+                var postText = document.getElementById('postText').value;
+                var postTags = document.getElementById('postTags').value;
+                var postThumbnail = document.getElementById('thumbnail').value;
+                var index = document.getElementById('index').value;
+
+                if( (postTitle === "") ||
+                    (postDate === "") ||
+                    (postText === "") ||
+                    (postTags === "") )
+                    {
+                    console.log("Need data!");
+                    $('.postLog').html("Error: All Fields Need Data");
+                }
+                else {
+                    postTags = postTags.toLowerCase();
+                    postTags = postTags.split(',');
+
+                    /* Check if user is logged in */
+                    var user = firebase.auth().currentUser;
+                    if (user) {                    
+                        console.log("User is signed in!");
+                            // Write Post Data
+                            firebase.database().ref('posts/' + index).set({
+                                title: postTitle,
+                                date: postDate,
+                                text : postText,
+                                tags : postTags,
+                                thumbnail : postThumbnail,
+                                // Negative index to maintain order when displaying posts page
+                  
+
+                            });
+                            console.log("Data written!");
+                            window.location.href = 'index.html';
+                            logOut();
+                  
+                    } 
+                    else {
+                        alert("Upload failed; try refreshing the page to trigger log in");
+                    }
+                }   
+            }
+
+            function logOut() {
+                // Sign out of user account
+                firebase.auth().signOut().then(function() {
+                    changeIndicatorStatus()
+                }, function(error) {
+                  console.error('Sign Out Error', error);
+                });
+            }
+
+            function uploadImage() {
+                // Upload image to firebase
+                var user = firebase.auth().currentUser;
+                if (user) {
+                    const ref = firebase.storage().ref('post_images');
+                    const file = document.querySelector('#myFile').files[0]
+                    const name = (+new Date()) + '-' + file.name;
+                    const metadata = {
+                      contentType: file.type
+                    };
+                    const task = ref.child(name).put(file, metadata);
+                    task.then((snapshot) => {
+                        var url = snapshot.downloadURL
+                        imagesList.push(url);
+                        displayImages();
+                        
+ 
+                    }).catch((error) => {
+                        console.error(error);
+                    });
+                }
+                else {
+                  alert("Upload failed, user is not logged in");
+                }
+            }
+            
+            function deleteImage(url, fileLocation) {
+                var index = imagesList.indexOf(fileLocation);
+                if (index > -1) {
+                    imagesList.splice(index, 1);
+                }
+                var storage = firebase.storage();
+                var storageRef = storage.ref();               
+                var user = firebase.auth().currentUser;
+                if (user) {
+                    var fullUrl = 'post_images/' + url;
+                    var ref = storageRef.child(fullUrl);
+                    
+                    // Delete the file
+                    ref.delete().then(function() {
+                      console.log('image deleted');
+                        images.pop
+                        displayImages();
+                    }).catch(function(error) {
+                      console.log('error deleting image: ' + fullUrl);
+                    });
+                } else {
+                    alert("Must be logged in to delete image");
+                }
+            }
+            
+            function displayImages() {
+                var images = "";
+                for (var i = 0; i < imagesList.length; i++) {
+                    var fileName = imagesList[i] + '';
+                    var slash = fileName.lastIndexOf('2F') + 2;
+                    var end = fileName.lastIndexOf('?');
+                    fileName = fileName.slice(slash, end);
+                    // Update page with newly uploaded image
+                    images += '<img src="' + imagesList[i] + '" width="100" /><button onclick="copyToClipboard(\'' + imagesList[i] + '\')">Copy URL </button> <button onclick="deleteImage(\'' + fileName + '\', \'' + imagesList[i] + '\')"> X </button><br />';
+                }
+                $('#images').html(images); 
+            }
+
+            function copyToClipboard(texty) {
+                // Copy the URL link to the clipboard to insert into img tag
+                // Creates temporary text element, appends our text, and copies the selected 'focus'
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(texty).select();
+                document.execCommand("copy");
+                $temp.remove();
+            }        
+        </script>
+    </body>
+</html>
