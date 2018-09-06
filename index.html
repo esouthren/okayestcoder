@@ -79,21 +79,20 @@
                         }
 
                         var postNum = (childData['index']);
-                        console.log("post: " + postNum);
-                        if(parseInt(postNum) % 2 == 0 || postNum == 1) { 
-                            string_of_posts += '<div class="post" onclick="displayPost(' + postNum + ')">';
-                        } 
-                        else {
-                           string_of_posts += '<div class="post2" onclick="displayPost(' + postNum + ')">';
-                        }
-                         string_of_posts += '<div class="postContent"><img src="' + thumbnail_url + '" class="thumbnail" align="right" alt="test!" />' +
-                                '<h2>' + childData['title'] + '</h2>' +
-                                '<h3>' + childData['date'] + '</h3>' ;
+                        
+                        /* appending "" or "2" to post for correct alternate colour scheme */
+                        var post = getPostAppend(postNum);
+                        
+                        string_of_posts += '<div class="post' + post + '" onclick="displayPost(' + postNum + ')">';
+                        /* In string_of_posts for thumbnail: <img src="' + thumbnail_url + '" class="thumbnail" align="right" alt="test!" /> */
+                         string_of_posts += '<div class="postContent' + post + '">' +
+                                '<table class="postHeader"><tr><td><h2>' + childData['title'] + '</h2></td>' +
+                                '<td class="postHeaderDate"><h3>' + childData['date'] + '</h3></td></tr></table>' ;
 
                         var blurb = childData['text'].slice(0,250);               
                         // Strip HTML tags so we don't get images in the posts list
                         var blurbStripped = blurb.replace(/<[^>]+>/g, ''); 
-                        string_of_posts += blurbStripped + '....<strong> Continue</strong><br /><h5><strong>Tags </strong>';
+                        string_of_posts += blurbStripped + '....<strong> Continue</strong><br /><h5>';
                         // Display all tags of a post
                         for(var i = 0; i < childData['tags'].length; i++) {
                             string_of_posts += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
@@ -117,24 +116,21 @@
                 dataDump.on('value', function(snapshot) {
                     snapshot.forEach(function(childSnapshot) {
                         var childData = childSnapshot.val();
-                        if(childData['index'] == postNum ) {
-                            if(postNum % 2 == 0) {
-                                post_string += '<div class="post">';
+                        if(childData['index'] == postNum) {
+                            /* appending "" or "2" to post for correct alternate colour scheme */
+                            var post = getPostAppend(postNum);
+                            post_string += '<div class="post' + post + '">';
+                            post_string += '<div class="postContentFull' + post + '">' +
+                            '<h3><a href="index.html">< Return to home</a></h3>' +
+                            '<h1>' + childData['title'] + '</h1>' +
+                            '<h3>' + childData['date'] + '</h3>' +
+                            '<h5><strong>Tags </strong>';
+                            // Display all tags
+                            for(var i = 0; i < childData['tags'].length; i++) {
+                                post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';  
                             }
-                            else {
-                                post_string += '<div class="post2">';
-                            }
-                        post_string += '<div class="postContentFull">' +
-                        '<h3><a href="index.html">< Return to home</a></h3>' +
-                        '<h1>' + childData['title'] + '</h1>' +
-                        '<h3>' + childData['date'] + '</h3>' +
-                        '<h5><strong>Tags </strong>';
-                        // Display all tags
-                        for(var i = 0; i < childData['tags'].length; i++) {
-                            post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';  
-                        }
-                        post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
-                        post_title = childData['title'];
+                            post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
+                            post_title = childData['title'];
                         }                  
                     });
                 });
@@ -154,6 +150,15 @@
                 var href = window.location.href;
                 var pageUrl = window.location.href + "?post=" + value;
                 window.history.pushState('','',pageUrl);                
+            }
+            
+            function getPostAppend(num) {
+                if(parseInt(num) % 2 == 0 || num == 1) {
+                    return "";                     
+                } 
+                else {
+                    return "2";
+                }
             }
             
         </script>
