@@ -10,6 +10,7 @@
     --link: #007949;
     --tag-highlight: #E9B000;
     --post-corners-rounded: 0em 1.5em 1.5em 0em;
+    --full-post-corners-rounded: 0em 1.5em 0em 0em;
 }
 
 * {
@@ -296,6 +297,7 @@ mark {
         border-left: 0.75em var(--post-one-color) solid;     
         background-color: white; 
         overflow: hidden;
+        border-radius: var(--full-post-corners-rounded);
     }
     
     .postContentFull2 {
@@ -303,6 +305,7 @@ mark {
         border-left: 0.75em var(--post-two-color) solid;     
         background-color: white; 
         overflow: hidden;
+        border-radius: var(--full-post-corners-rounded);
         }
     
     .postContentFull img {
