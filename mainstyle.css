@@ -174,12 +174,10 @@ mark {
     clear: right;
 }
 
-.postContentFull, .postContentFull2 img {
+.postContentFull img, .postContentFull2 img {
     width: 80%;
     margin: 3em 0em 3em 0em;
-
     margin-right: 12%;
-    display: block;    
 }
 
 .postContent h2, h3 {
@@ -315,27 +313,13 @@ mark {
         border-radius: var(--post-corners-rounded-glitchfix);
         }
     
-    .postContentFull img {
-        width: 50%;
-        margin-left: 25%;
-        margin-right: 25%;
-    }
-    
-    .postContentFull2 img {
+    .postContentFull img, .postContentFull2 img {
         width: 50%;
         margin-left: 25%;
         margin-right: 25%;
     }
 
-    .postContent2 img {
-        max-width: 20%;
-        max-height: 100%;
-        float: right;
-        margin: 1em 1em 0em 3em;
-        visibility: visible;
-        clear: right;
-    }
-    .postContent img {
+    .postContent img, .postContent2 img {
         max-width: 20%;
         max-height: 100%;
         float: right;
