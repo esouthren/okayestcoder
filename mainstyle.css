@@ -9,8 +9,9 @@
     --link-hover:#262228;
     --link: #007949;
     --tag-highlight: #E9B000;
-    --post-corners-rounded: 0em 1.5em 1.5em 0em;
-    --full-post-corners-rounded: 0em 1.5em 0em 0em;
+    --post-corners-rounded: 0em 2em 2em 0em;
+    --post-corners-rounded-glitchfix: 0em 1.4em 1.4em 0em;
+   
     --main-font-size: 1.25em;
 }
 
@@ -303,7 +304,7 @@ mark {
         border-left: 0.75em var(--post-one-color) solid;     
         background-color: white; 
         overflow: hidden;
-        border-radius: var(--full-post-corners-rounded);
+        border-radius: var(--post-corners-rounded-glitchfix);
     }
     
     .postContentFull2 {
@@ -311,7 +312,7 @@ mark {
         border-left: 0.75em var(--post-two-color) solid;     
         background-color: white; 
         overflow: hidden;
-        border-radius: var(--full-post-corners-rounded);
+        border-radius: var(--post-corners-rounded-glitchfix);
         }
     
     .postContentFull img {
@@ -334,7 +335,7 @@ mark {
         visibility: visible;
         clear: right;
     }
-        .postContent img {
+    .postContent img {
         max-width: 20%;
         max-height: 100%;
         float: right;
