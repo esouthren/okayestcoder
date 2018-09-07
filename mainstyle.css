@@ -11,6 +11,7 @@
     --tag-highlight: #E9B000;
     --post-corners-rounded: 0em 1.5em 1.5em 0em;
     --full-post-corners-rounded: 0em 1.5em 0em 0em;
+    --main-font-size: 1.25em;
 }
 
 * {
@@ -18,6 +19,8 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+
 
 /* default rules for for mobile Devices */
      
@@ -124,6 +127,8 @@ a {
     background-color: white; 
     overflow: hidden;
     clear: both;
+    font-size: 1.1em;
+
 }
 
 /* tag highlighter */
@@ -149,6 +154,7 @@ mark {
     overflow: hidden;
     clear: both;
     border-left: 0;
+    font-size: var(--main-font-size);
 }
 
 .postContentFull a {
@@ -289,7 +295,7 @@ mark {
         border-radius: 0%;
         cursor: pointer;
         background-color: var(--post-two-color);
-                border-radius: var(--post-corners-rounded);
+        border-radius: var(--post-corners-rounded);
     }
 
     .postContentFull {
