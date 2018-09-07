@@ -128,20 +128,22 @@
          }
             
             function deletePost() {
-                var selectedPost = $("#postToEdit").val();
+                var selectedPost = $("#index").val();
                 var index = document.getElementById('index').value;
-                firebase.database().ref('posts/' + index).set(null);
+                // Increment 'PostCount' by 1
                 firebase.database().ref('/count/postCount').once('value').then(function(snapshot) {
-                            var count = (snapshot.val());
-                            count -=1;            
-                            firebase.database().ref('count').set({
-                                postCount: count
-                                 });
-                });
-                console.log("removed post!");
-                window.location.href = 'index.html';
-                            logOut();
-            }
+                    var count = (snapshot.val());
+                    count -=1;            
+                    firebase.database().ref('count').set({
+                        postCount: count
+                         });
+                    // Write Post Data
+                    firebase.database().ref('posts/' + selectedPost).set(null);
+                    console.log("Data written! selectedpost = " + selectedPost);
+                    //window.location.href = 'index.html';
+                    logOut();
+                }); 
+    }
 
             
             function updateEditPostFields() {
