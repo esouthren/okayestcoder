@@ -11,7 +11,6 @@
     --tag-highlight: #E9B000;
     --post-corners-rounded: 0em 2em 2em 0em;
     --post-corners-rounded-glitchfix: 0em 1.4em 1.4em 0em;
-   
     --main-font-size: 1.25em;
 }
 
@@ -20,8 +19,6 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
-
 
 /* default rules for for mobile Devices */
      

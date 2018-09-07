@@ -9,6 +9,7 @@ function initialiseFirebase() {
         messagingSenderId: "935764653668"
     };
     firebase.initializeApp(config); 
+    console.log(firebase.app().name);
 }
 
 function logIn() {
