@@ -38,7 +38,7 @@ a:hover {
 
 a {
     text-decoration: none;
-    color: var(--link);
+    color: #0375B4;
 }
 
 #left {
@@ -157,11 +157,11 @@ mark {
     font-size: var(--main-font-size);
 }
 
-.postContentFull a {
+.postContentFull, .postContentFull2 a {
     color: var(--link);
 }
 
-.postContentFull a:hover {
+.postContentFull, .postContentFull2 a:hover {
     color: var(--link-hover);
 }
 
@@ -173,11 +173,11 @@ mark {
     clear: right;
 }
 
-.postContentFull img {
+.postContentFull, .postContentFull2 img {
     width: 80%;
     margin: 3em 0em 3em 0em;
-    margin-left: 8%;
-    margin-right: 12;
+
+    margin-right: 12%;
     display: block;    
 }
 
@@ -213,7 +213,7 @@ mark {
 }
 
 .about a {
-    color: var(--sidebar-color);
+    color:  #0375B4;
 }
 
 .about a:hover {
@@ -319,8 +319,22 @@ mark {
         margin-left: 25%;
         margin-right: 25%;
     }
+    
+    .postContentFull2 img {
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
 
-    .postContent img {
+    .postContent2 img {
+        max-width: 20%;
+        max-height: 100%;
+        float: right;
+        margin: 1em 1em 0em 3em;
+        visibility: visible;
+        clear: right;
+    }
+        .postContent img {
         max-width: 20%;
         max-height: 100%;
         float: right;

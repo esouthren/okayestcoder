@@ -148,6 +148,7 @@
             
             function updateEditPostFields() {
                 var selectedPost = $("#postToEdit").val();
+                console.log("selectedPost: " + selectedPost);
                  dataDump.on('value', function(snapshot) {
                     snapshot.forEach(function(childSnapshot) {
                         var childData = childSnapshot.val();
