@@ -4,7 +4,6 @@ Imports blocks of HTML, e.g. menu
 
 call with:      <script>HTMLImporter.import("menu.html");</script>
 
-
 */
 
 function HTMLImporter() {}
