@@ -129,7 +129,7 @@ a {
 }
 
 /* The Modal (background) */
-.modal {
+.postPreviewBackground {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -146,7 +146,7 @@ a {
 
 
 /* Modal Content for 'preview post' feature */
-.modalContent {
+.postPreviewContentHolder {
     font-size: 1em;
     position: relative;
     background-color: #fefefe;

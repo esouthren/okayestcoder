@@ -1,5 +1,11 @@
 var imagesList = [];
 
+function setAddPostButtons() {
+    var postString = "";
+    postString +=  '<input id="clickMe" type="button" value="Add Post" onclick="submitPost()" />';
+    $('.pageSpecificButtons').html(postString);
+}
+
 function submitPost() {
     // Upload post to firebase
     var postTitle = document.getElementById('postTitle').value;

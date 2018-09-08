@@ -1,4 +1,12 @@
- function deletePostButton() {
+function setEditPostButtons() {
+    console.log("setting edit buttons");
+    var postString = "";
+    postString +=  '<input id="clickMe" type="button" value="Update" onclick="updatePost()" />' + 
+        '<button id="deletePost" style="background-color: red" onclick="deletePostButton()"> Delete Post </button>';
+    $('.pageSpecificButtons').html(postString);
+}
+
+function deletePostButton() {
      // is a post selected?
      if($("#postToEdit").val() == "") {
          alert("You haven't selected a post to delete!");

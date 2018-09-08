@@ -21,69 +21,29 @@
         <div id="main">
             <div class="post">
                 <div class="postContentFull">
-                    <div class="addPostForm">
-                        <h1>Edit Post</h1>  
-                        <h2><div class="logInStatus"></div></h2><br />
-                        <input type="button" value="Sign In" onclick="logIn()" />                       
-                        <input type="button" value="Sign Out" onclick="logOut()" /> 
-                        <br /><br />
-                        <div id="dropDownMenu"><!-- Filled in JS script --></div>
-                        <br />
-                                                <!-- Preview Post code -->
-                        <!-- The Modal -->
-<div class="modal">
-
-  <!-- Modal content -->
-  <div class="modalContent">
-    <button class="close" onclick="closePreview()">&times;</button>
-      <div class="modalPreviewContent"></div>  </div>
-
-</div>
-                        
-                        <input type="file" id="myFile" multiple size="50" onchange="uploadImage()">
-                        <div id="images"></div>
-                        <h3>Title</h3>
-                        <input type="text" id="postTitle"  />
-                        <h3>Publish Date</h3>
-                        <input type="text" id="postDate" />
-                        <h3>Thumbnail Url</h3>
-                        <input type="text" id="thumbnail" />
-                        <h3>Text</h3>
-                        <textarea id="postText" rows="50"></textarea>
-                        <h3>Tags (seperate by comma)</h3>
-                        <input type="text" id="postTags"  />
-                        <br /><br />
-                        <input type="text" id="postName" readonly/>
-                        <br /><br />
-                        <div class="postLog"></div><br />
-                        <input id="clickMe" type="button" value="Update" onclick="updatePost()" /> 
-                        <input id="previewPost" type="button" value="Preview Post" onclick="previewPost()" />
-                        <button id="deletePost" style="background-color: red" onclick="deletePostButton()"> Delete Post </button>
-                        <br /><br /><br /> 
-                        <h3>To add code blocks</h3>
-                        <pre>
-                            <code class="language-html">
-                                <script type="prism-html-markup">
+                <script>HTMLImporter.import("postform.html");</script> 
+                <pre>
+                    <code class="language-html">
+                        <script type="prism-html-markup">
 <pre>
     <code class="language-html">
         <!-- Displaying HTML requires additional <script> tags -->
         <script type="prism-html-markup"> 
-            <h1>Code goes here</h1>
+            <h1> -> Code goes here <- </h1>
         </ script> 
     </code>
 </pre>
-                                </script>
-                            </code>
-                        </pre>  
-
-                    </div>
-                </div>
+                        </script>
+                    </code>
+                </pre>  
             </div>
+        </div>
         </div>
         <script>
             $( document ).ready(function() {
                 initialiseFirebase();
                 changeLoggedInStatus();
+                setEditPostButtons();
                 createPostsDropDownMenu();
             });
         </script>
