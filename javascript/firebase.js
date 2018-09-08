@@ -28,7 +28,7 @@ function logIn() {
             console.log("User signed in");
             changeLoggedInStatus();
         }).catch(function(error) {
-            console.log("login error :/");
+            console.log("login error :/ " + error.code + ' Message: ' + error.message);
             var errorCode = error.code;
             var errorMessage = error.message;
             // The email of the user's account used.

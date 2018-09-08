@@ -91,7 +91,7 @@ function displayPost(postNum) {
                 var post = getPostAppend(postNum);
                 post_string += '<div class="post' + post + '">';
                 post_string += '<div class="postContentFull' + post + '">' +
-                '<h3><a href="index.html">< Return to home</a></h3>' +
+                '<h3><a href="index.html">< Return</a></h3>' +
                 '<h1>' + childData['title'] + '</h1>' +
                 '<h3>' + childData['date'] + '</h3>' +
                 '<h5><strong>Tags </strong>';
@@ -99,7 +99,8 @@ function displayPost(postNum) {
                 for(var i = 0; i < childData['tags'].length; i++) {
                     post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';  
                 }
-                post_string += '</h5>' + childData['text'] + '<br /><br /></div></div>';
+                post_string += '</h5>' + childData['text'] + '<br /><br />' +
+                    '<h3><a href="index.html">< Return</a></h3></div></div>';
                 post_title = childData['title'];
             }                  
         });
