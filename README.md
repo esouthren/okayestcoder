@@ -9,9 +9,9 @@ Local Development:
 - We run a local server so that our html importer script can populate the menu and other external html files (can only run from http:// addresses). 
 
 - Run a local python server in index.html directory
-'''
+```
 python -m  http.server 8000
-'''
+```
 
 - http://localhost:8080 = index.html, http://localhost:8080/about.html
 
