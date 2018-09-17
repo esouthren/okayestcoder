@@ -6,6 +6,10 @@ function setAddPostButtons() {
     $('.pageSpecificButtons').html(postString);
 }
 
+function setAddPostTitle() {
+    $('.pageTitle').html("Add a Post");
+}
+
 function submitPost() {
     // Upload post to firebase
     var postTitle = document.getElementById('postTitle').value;

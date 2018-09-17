@@ -3,12 +3,12 @@
     <head>
         <meta name="viewport" content="width=device-width" />
         <script type="text/javascript" src="htmlImporter.js"></script>
-        <title>The Okay-est Coder: Edit A Post</title>
+        <title>The Okay-est Coder: Tag Search</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript" src="javascript/firebase.js"></script>
-        <script type="text/javascript" src="javascript/addpost.js"></script>
+        <script type="text/javascript" src="javascript/tagsearch.js"></script>
         <script type="text/javascript" src="javascript/images.js"></script>
         <script type="text/javascript" src="javascript/previewPost.js"></script>
         <link href="prism_highlighter/prism.css" rel="stylesheet" type="text/css" />
@@ -19,30 +19,20 @@
         <div id="main">
             <div class="post">
                 <div class="postContentFull">
-                <script>HTMLImporter.import("postform.html");</script> 
-                <pre>
-                    <code class="language-html">
-                        <script type="prism-html-markup">
-<pre>
-    <code class="language-html">
-        <!-- Displaying HTML requires additional <script> tags -->
-        <script type="prism-html-markup"> 
-            <h1> -> Code goes here <- </h1>
-        </ script> 
-    </code>
-</pre>
-                        </script>
-                    </code>
-                </pre>  
+                    <h1>Tag Search</h1>
+                    
+                    <h2>Filter by tag</h2>
+                    *Tags here*
+                    <br /><br />
+                    <h2>Articles</h2>
+                    <div id="posts"></div>
+                </div>
             </div>
-        </div>
         </div>
         <script>
             $( document ).ready(function() {
                 initialiseFirebase();
-                setAddPostTitle();
-                setAddPostButtons();
-                changeLoggedInStatus();
+                showTaggedPosts();
             });
         </script>
     </body>

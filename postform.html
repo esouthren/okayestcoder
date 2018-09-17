@@ -4,7 +4,7 @@ This code defines the submission form for Add Post and Edit Post. It is inserted
 -->
 
 <div class="addPostForm">
-    <h1>Edit Post</h1>  
+    <h1><div class=pageTitle><!-- Edit or Add --></div></h1>  
     <h2><div class="logInStatus"></div></h2><br />
     <input type="button" value="Sign In" onclick="logIn()" />                       
     <input type="button" value="Sign Out" onclick="logOut()" /> 
@@ -30,8 +30,6 @@ This code defines the submission form for Add Post and Edit Post. It is inserted
     <textarea id="postText" rows="50"></textarea>
     <h3>Tags (seperate by comma)</h3>
     <input type="text" id="postTags"  />
-    <br /><br />
-    <input type="text" id="postName" readonly/>
     <br /><br />
     <div class="postLog"></div>
     <input id="previewPost" type="button" value="Preview Post" onclick="previewPost()" />

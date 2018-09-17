@@ -6,6 +6,10 @@ function setEditPostButtons() {
     $('.pageSpecificButtons').html(postString);
 }
 
+function setEditPostTitle() {
+    $('.pageTitle').html("Edit a Post");
+}
+
 function deletePostButton() {
      // is a post selected?
      if($("#postToEdit").val() == "") {
