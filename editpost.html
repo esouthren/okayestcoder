@@ -21,7 +21,13 @@
         <div id="main">
             <div class="post">
                 <div class="postContentFull">
-                <script>HTMLImporter.import("postform.html");</script> 
+                    <h1><div class="pageTitle">Title</div></h1>
+                <script>HTMLImporter.import("postform.html");</script>
+                    <h2><div class="pageSpecificButtons">Buttons go here</div></h2>
+                        
+    <br />
+    <h3>To add code blocks</h3>
+                    
                 <pre>
                     <code class="language-html">
                         <script type="prism-html-markup">
@@ -41,11 +47,13 @@
         </div>
         <script>
             $( document ).ready(function() {
-                initialiseFirebase();
-                changeLoggedInStatus();
+
                 setEditPostButtons();
                 setEditPostTitle();
-                createPostsDropDownMenu();
+          
+                                initialiseFirebase();
+                changeLoggedInStatus();
+                      createPostsDropDownMenu();
             });
         </script>
     </body>

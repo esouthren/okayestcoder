@@ -4,6 +4,7 @@ function setEditPostButtons() {
     postString +=  '<input id="clickMe" type="button" value="Update" onclick="updatePost()" />' + 
         '<button id="deletePost" style="background-color: red" onclick="deletePostButton()"> Delete Post </button>';
     $('.pageSpecificButtons').html(postString);
+    console.log($('.pageSpecificButtons').html());
 }
 
 function setEditPostTitle() {
