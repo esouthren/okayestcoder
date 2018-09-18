@@ -1,17 +1,36 @@
-function showTaggedPosts() {
-    
+//tags = new Set();
 
-    console.log("displaying posts...");
+function displayTags() {
+    // display a list of tags used in posts
     var database = firebase.database();
     var dataDump = database.ref('posts').orderByChild('index');
+    var tags_string = "";
+    tags = new Set();
+    dataDump.on('value', function(snapshot) {
+         snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            for(var i = 0; i < childData['tags'].length; i++) {
+                var temp = childData['tags'][i];
+                tags.add(temp);
+            }
+     }); 
+        var tagNum = 0;
+        for (var it = tags.values(), val= null; val=it.next().value; ) {
+            console.log("tagnum: " + tagNum);
+            tags_string += '<mark id="tagNum' + tagNum + '" onclick="toggleTag(' + tagNum++ + ')">&nbsp;' + val + ' x &nbsp;</mark>&nbsp;&nbsp;';
+         }
+       $('#tags').html(tags_string);
+     });
+}
+
+function showTaggedPosts() {
     
-    var filteredTags = getUserFilteredTags(dataDump);
-    console.log("size:" + filteredTags.size);
-    for (var it = filteredTags.values(), val= null;         val=it.next().value; ) {
-        console.log(val);
-    }
+    // todo: only display post if the tag filter is true
     
+        var database = firebase.database();
     var string_of_posts = "";
+        var dataDump = database.ref('posts').orderByChild('index');
+
     dataDump.on('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
             var childData = childSnapshot.val();
@@ -31,18 +50,14 @@ function showTaggedPosts() {
     });
 }
 
-function getUserFilteredTags(data) {
-    /* loop through posts, create set of tags in them */
-    
-    let tags = new Set();
-     data.on('value', function(snapshot) {
-         snapshot.forEach(function(childSnapshot) {
-            var childData = childSnapshot.val();
-            for(var i = 0; i < childData['tags'].length; i++) {
-                console.log("adding...." + childData['tags'][i]);
-                tags.add(childData['tags'][i]);
-            }
-     });
-     });
-    return tags;
+function updateFilters() {
+    console.log("update filters");
+    // call showTaggedPosts?
+}
+
+function toggleTag(num) {
+    console.log("toggle taggy");
+    var taggy = '#tagNum' + num;
+    console.log("taggy: " + taggy);
+    $(taggy).css("background-color: red");
 }

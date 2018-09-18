@@ -22,8 +22,9 @@
                     <h1>Tag Search</h1>
                     
                     <h2>Filter by tag</h2>
-                    *Tags here*
+                    <div id="tags">>> Loading Tags</div>
                     <br /><br />
+                    <button class="button" onclick="updateFilters()">Update Filters</button>
                     <h2>Articles</h2>
                     <div id="posts"></div>
                 </div>
@@ -33,6 +34,7 @@
             $( document ).ready(function() {
                 initialiseFirebase();
                 showTaggedPosts();
+                displayTags();
             });
         </script>
     </body>
