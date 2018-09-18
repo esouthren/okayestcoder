@@ -2,7 +2,7 @@ var imagesList = [];
 
 function setAddPostButtons() {
     var postString = "";
-    postString +=  '<input id="clickMe" type="button" value="Add Post" onclick="submitPost()" />';
+    postString +=  '<input id="clickMe" class="button" type="button" value="Add Post" onclick="submitPost()" />';
     $('.pageSpecificButtons').html(postString);
 }
 

@@ -1,8 +1,8 @@
 function setEditPostButtons() {
     console.log("setting edit buttons");
     var postString = "";
-    postString +=  '<input id="clickMe" type="button" value="Update" onclick="updatePost()" />' + 
-        '<button id="deletePost" style="background-color: red" onclick="deletePostButton()"> Delete Post </button>';
+    postString +=  '<input id="clickMe" class="button" type="button" value="Update" onclick="updatePost()" />' + 
+        '<button id="deletePost" class="button" style="background-color: red" onclick="deletePostButton()"> Delete Post </button>';
     $('.pageSpecificButtons').html(postString);
     console.log($('.pageSpecificButtons').html());
 }
