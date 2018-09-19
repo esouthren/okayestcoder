@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width" />        
+        <meta name="viewport" content="width=device-width" />
         <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <title>The Okay-est Coder: Home</title>
         <link rel="stylesheet" type="text/css" href="mainstyle.css">
         <script type="text/javascript" src="javascript/firebase.js"></script>
@@ -14,14 +14,19 @@
         <script src="prism_highlighter/prism.js" type="text/javascript"></script>
     </head>
     <body>
-       
+      <noscript>
+        <div class="noJavascript">
+            This website requires Javascript support!
+        </div>
+      </noscript>
+
         <script>
         $( document ).ready(function() {
             HTMLImporter.import("menu.html");
             initialiseFirebase();
             displayAllPosts();
         });
-        </script> 
+        </script>
         <div id="main">
         <!-- main filled by js scripts -->
         </div>
