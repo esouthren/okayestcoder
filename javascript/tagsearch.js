@@ -57,7 +57,6 @@ function showTaggedPosts() {
 function toggleTag(num) {
     var taggy = '#tagNum' + num;
     var curr = $(taggy).css("background-color");
-    console.log(curr);
     if(curr=="rgb(255, 255, 255)") {
         $(taggy).css("background-color", "var(--post-two-color)");
     } else {
@@ -75,7 +74,6 @@ function showNoTags() {
 }
 
 function showAllTags() {
-  console.log("turning on all tags...");
   var tags = $("#tags").children("mark");
   for(var i = 0; i < tags.length; i++) {
     $(tags[i]).css("background-color", "var(--post-two-color)");
