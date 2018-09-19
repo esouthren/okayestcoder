@@ -40,6 +40,21 @@
     cursor: pointer;
 }
 
+.tagSearch {
+  font-size: 105%;
+  background-color: white;
+  line-height: 1.89;
+  padding: 0.1em;
+  border: 1px solid var(--post-two-color);
+  cursor: pointer;
+
+}
+
+.tagSearchContainer {
+  width: 90%;
+
+}
+
 .button:hover {
     background-color: var(--post-two-color);
 }
@@ -205,10 +220,11 @@ a {
 }
 
 /* tag highlighter */
-mark {
+.tag {
     font-size: 105%;
     background-color: var(--tag-highlight);
     line-height: 1.5;
+    padding: 0.1em;
 }
 
 .postHeader {
