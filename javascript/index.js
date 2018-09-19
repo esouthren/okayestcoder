@@ -97,7 +97,7 @@ function displayPost(postNum) {
                 '<h5><strong>Tags </strong>';
                 // Display all tags
                 for(var i = 0; i < childData['tags'].length; i++) {
-                    post_string += '<mark>&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
+                    post_string += '<mark class="tag">&nbsp;' + childData['tags'][i] + '&nbsp;</mark>&nbsp;&nbsp;';
                 }
                 post_string += '</h5>' + childData['text'] + '<br /><br />' +
                     '<h3><a href="index.html">< Return</a></h3></div></div>';

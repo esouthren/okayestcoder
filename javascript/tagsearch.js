@@ -26,7 +26,6 @@ function displayTags() {
 function showTaggedPosts() {
     console.log("updating posts...");
     tags = getSelectedTagList();
-    console.log(tags);
     // todo: only display post if the tag filter is true
 
     var database = firebase.database();
@@ -38,10 +37,20 @@ function showTaggedPosts() {
             var childData = childSnapshot.val();
             var postNum = childData['index'];
             // check if tags match - if they do, add to HTML string
-            
-            string_of_posts += '<h3><li><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></li></h3>';
+            var postTags = new Set();
+            for(var i = 0; i < childData['tags'].length; i++) {
+              postTags.add($.trim(childData['tags'][i]));
+            }
 
-            string_of_posts += '</h5>';
+            var intersect = new Set();
+            for(var x of tags) if(postTags.has(x)) intersect.add(x);
+            console.log(childData['title']);
+            console.log(postTags);
+            console.log(tags);
+            console.log(intersect);
+            if(intersect.size > 0) {
+              string_of_posts += '<h3><li><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></li></h3>';
+            }
         });
         // Map HTML to #main div content
         var list_of_posts = string_of_posts;
