@@ -1,5 +1,17 @@
 //tags = new Set();
 
+// todo 
+
+/*
+create tags class to display them nicely
+
+add a 'display all' button which pops all the tags back to active
+
+make update filters button do the thing
+
+add explanation or little eye/eye hidden logo to clarify what the toggling does?
+*/
+
 function displayTags() {
     // display a list of tags used in posts
     var database = firebase.database();
@@ -17,7 +29,7 @@ function displayTags() {
         var tagNum = 0;
         for (var it = tags.values(), val= null; val=it.next().value; ) {
             console.log("tagnum: " + tagNum);
-            tags_string += '<mark id="tagNum' + tagNum + '" onclick="toggleTag(' + tagNum++ + ')">&nbsp;' + val + ' x &nbsp;</mark>&nbsp;&nbsp;';
+            tags_string += '<mark class="tagNum' + tagNum + '" onclick="toggleTag(' + tagNum++ + ')">&nbsp;' + val + ' x &nbsp;</mark>&nbsp;&nbsp;';
          }
        $('#tags').html(tags_string);
      });
@@ -57,7 +69,7 @@ function updateFilters() {
 
 function toggleTag(num) {
     console.log("toggle taggy");
-    var taggy = '#tagNum' + num;
+    var taggy = '.tagNum' + num;
     console.log("taggy: " + taggy);
-    $(taggy).css("background-color: red");
+    $(taggy).css("background-color", "white");
 }
