@@ -16,7 +16,8 @@ function displayTags() {
      });
         var tagNum = 0;
         for (var it = tags.values(), val= null; val=it.next().value; ) {
-            tags_string += '<mark class="tagSearch" id="tagNum' + tagNum + '" onclick="toggleTag(' + tagNum++ + ')">&nbsp;' + val + ' &nbsp;</mark>&nbsp;&nbsp;';
+            tags_string += '<mark class="tagSearch" id="tagNum' + tagNum + '" onclick="toggleTag(' + tagNum++ + ')">&nbsp;' + val + '&nbsp;</mark>&nbsp;&nbsp;';
+            if(tagNum % 4 == 0 ) { tags_string += "<br />"; }
          }
        $('#tags').html(tags_string);
        tagList = tags;
@@ -24,14 +25,11 @@ function displayTags() {
 }
 
 function showTaggedPosts() {
-    console.log("updating posts...");
     tags = getSelectedTagList();
-    // todo: only display post if the tag filter is true
-
     var database = firebase.database();
     var string_of_posts = "";
     var dataDump = database.ref('posts').orderByChild('index');
-
+    var postCount = 0;
     dataDump.on('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
             var childData = childSnapshot.val();
@@ -41,26 +39,19 @@ function showTaggedPosts() {
             for(var i = 0; i < childData['tags'].length; i++) {
               postTags.add($.trim(childData['tags'][i]));
             }
-
             var intersect = new Set();
             for(var x of tags) if(postTags.has(x)) intersect.add(x);
-            console.log(childData['title']);
-            console.log(postTags);
-            console.log(tags);
-            console.log(intersect);
+
             if(intersect.size > 0) {
-              string_of_posts += '<h3><li><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></li></h3>';
+              string_of_posts += '<h3><a id="titleLink" href="#" onclick="displayPost(' + postNum + ');return false;">' + childData['title'] + '</a></h3>';
+              postCount++;
             }
         });
-        // Map HTML to #main div content
-        var list_of_posts = string_of_posts;
-        $('#posts').html(list_of_posts);
+        if(postCount == 0) {
+          string_of_posts += "Click some tags above to show tagged articles.<br /><br />";
+        }
+        $('#posts').html(string_of_posts);
     });
-}
-
-function updateFilters() {
-    console.log("update filters");
-    // call showTaggedPosts?
 }
 
 function toggleTag(num) {

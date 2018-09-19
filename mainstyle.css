@@ -47,11 +47,13 @@
   padding: 0.1em;
   border: 1px solid var(--post-two-color);
   cursor: pointer;
+  overflow-wrap: normal;
+
 
 }
 
 .tagSearchContainer {
-  width: 90%;
+  width: 100%;
 
 }
 
